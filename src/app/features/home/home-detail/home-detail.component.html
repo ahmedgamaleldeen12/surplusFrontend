@@ -1,0 +1,79 @@
+<div class="container">
+  <div class="search-filter">
+    <div class="search-box">
+      <input type="text" placeholder="Search Products" />
+      <i class="icon-search"></i>
+    </div>
+
+    <div class="actions">
+      <button class="sort-button">
+        <i class="icon-sort"></i>
+      </button>
+
+      <div class="view-toggle">
+        <button [class.active]="view === 'list'" (click)="setView('list')">List</button>
+        <button [class.active]="view === 'grid'" (click)="setView('grid')">Grid</button>
+      </div>
+
+      <select class="sort-dropdown">
+        <option>Price: High to low</option>
+        <option>Price: Low to High</option>
+        <option>Dropdown menu item</option>
+        <option>Dropdown menu item</option>
+        <option>Dropdown menu item</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="content">
+    <aside class="filters">
+      <div class="filter-header">
+        <h3>Filter</h3>
+        <a href="#">Reset</a>
+      </div>
+
+      <div class="filter-section">
+        <h4>Categories</h4>
+        <label><input type="checkbox" /> Category1</label>
+        <label><input type="checkbox" /> Category1</label>
+        <label><input type="checkbox" /> Category1</label>
+        <label><input type="checkbox" checked /> Category1</label>
+        <a class="show-all" href="#">Show All</a>
+      </div>
+
+      <div class="filter-section">
+        <h4>Price range</h4>
+        <div class="range-values">
+          <span>665</span>
+          <span>1,120</span>
+        </div>
+        <input type="range" min="0" max="2000" />
+      </div>
+    </aside>
+
+
+    <div class="products-grid" [ngClass]="view">
+      <app-product-item *ngFor="let i of [1,2,3,4,5,6,7]"></app-product-item>
+    </div>
+
+    <div class="pagination-container">
+      <div class="entries-info">Showing 1 to 10 of 200 entries</div>
+
+      <div class="pagination">
+        <button class="page-btn">«</button>
+        <button class="page-btn">‹</button>
+        <button class="page-btn active">1</button>
+        <button class="page-btn">2</button>
+        <button class="page-btn">4</button>
+        <button class="page-btn">5</button>
+        <button class="page-btn">›</button>
+        <button class="page-btn">»</button>
+      </div>
+
+      <select class="dropdown">
+        <option>Test</option>
+        <option>Another Option</option>
+      </select>
+    </div>
+  </div>
+</div>

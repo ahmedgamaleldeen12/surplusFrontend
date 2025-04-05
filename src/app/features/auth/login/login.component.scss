@@ -35,15 +35,10 @@
 }
 
 :host ::ng-deep .p-password-input {
-  background-color: #ffffff;
   border-radius: 40px;
-  color: black;
 
 }
-::ng-deep .p-password-mask-icon,
-::ng-deep .p-password-unmask-icon {
-  color: black !important;
-}
+
 
 
 /* Form options */

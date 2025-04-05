@@ -1,1 +1,34 @@
-<p>register works!</p>
+<p class="description">
+  Regular users can sign up to browse, shop, and track orders.
+</p>
+<form class="register-form">
+  <div class="single-input">
+    <label for="email">Email Address</label>
+    <input
+      type="email"
+      id="email"
+      placeholder="Enter your Email Address"
+      pInputText
+      [fluid]="true"
+    />
+  </div>
+  <div class="single-input">
+    <label for="username">User name</label>
+    <input
+      type="text"
+      id="username"
+      placeholder="Enter your User name"
+      pInputText
+      [fluid]="true"
+    />
+  </div>
+
+  <div class="single-input">
+    <label for="password">Password</label>
+    <p-password [toggleMask]="true"  [fluid] = "true"  inputId="password" placeholder="Enter your Password" [feedback]="false"/>
+  </div>
+
+  <div class="btn-submit-container">
+    <button type="submit" class="btn-submit">Register</button>
+  </div>
+</form>

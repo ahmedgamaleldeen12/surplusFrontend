@@ -27,7 +27,7 @@ export class ApiBaseService {
       if (token) {
         req.headers['Authorization'] = `${token}`;
       }
-      // req.headers['Access-Control-Allow-Origin'] = '*';
+      req.headers['Access-Control-Allow-Origin'] = '*';
       return req;
     });
 

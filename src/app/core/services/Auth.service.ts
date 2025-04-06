@@ -1,6 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { CookiesConstants } from '../constants/CookiesConstants';
+import { jwtDecode } from 'jwt-decode';
+import { UserRole } from '../types/UserRole';
 
 @Injectable({
   providedIn: 'root',
@@ -20,11 +22,23 @@ export class AuthService {
     return this.cookieService.get(CookiesConstants.authUserRefreshToken);
   }
 
-  getUserRole(): void {
-
+  getUserRole(): string | null {
+    try {
+      const token = this.cookieService.get(CookiesConstants.authUserToken);
+      const decoded: any = jwtDecode(token);
+      return decoded?.role ?? null;
+    } catch (error) {
+      return null;
+    }
   }
-
-   logOut(): void {
+  setTempAuthRole(role: UserRole):void {
+    this.cookieService.set(CookiesConstants.tempAuthRole, role)
+  }
+  getTempAuthRole():UserRole{
+    const role = this.cookieService.get(CookiesConstants.tempAuthRole);
+    return (role as UserRole) || 'User';
+  }
+  logOut(): void {
     this.clearCookies();
     window.location.reload();
   }

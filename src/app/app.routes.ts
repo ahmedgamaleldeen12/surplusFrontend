@@ -3,6 +3,7 @@ import { AuthComponent } from './features/auth/auth.component';
 import { LoginComponent } from './features/auth/login/login.component';
 import { RegisterComponent } from './features/auth/register/register.component';
 import { HomeComponent } from './features/home/home.component';
+import { roleGuard } from './core/guards/role.guard';
 
 export const routes: Routes = [
   {
@@ -22,18 +23,20 @@ export const routes: Routes = [
       {
         path: 'login',
         component: LoginComponent,
-        title:'Login'
+        title: 'Login',
       },
       {
         path: 'register',
         component: RegisterComponent,
-        title:'Register'
+        title: 'Register',
       },
     ],
   },
   {
-    path: 'home',
+    path: 'marketplace',
     component: HomeComponent,
-    title:'home'
+    title: 'Market Place',
+    canActivate: [roleGuard],
+    data: { blockedRoles: ['BusinessManager'] }, //  block only BusinessManager
   },
 ];

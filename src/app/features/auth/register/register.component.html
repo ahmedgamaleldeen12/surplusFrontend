@@ -1,7 +1,13 @@
-<p class="description">
-  Regular users can sign up to browse, shop, and track orders.
-</p>
-<form class="register-form">
+@if(tempRole() == 'BusinessManager'){
+  <p class="description">
+    Are you a supplier? Log in to manage your listings and sales.  </p>
+}@else{
+  <p class="description">
+    Regular users can sign in to browse, shop, and track orders.
+  </p>
+}
+
+<form class="register-form" [formGroup]="registerForm" (submit)="register()">
   <div class="single-input">
     <label for="email">Email Address</label>
     <input
@@ -10,6 +16,11 @@
       placeholder="Enter your Email Address"
       pInputText
       [fluid]="true"
+      formControlName="email"
+      [ngClass]="{
+        'ng-invalid': email!.invalid && (email!.touched || email!.dirty),
+        'ng-dirty': email!.invalid && (email!.touched || email!.dirty),
+      }"
     />
   </div>
   <div class="single-input">
@@ -20,12 +31,29 @@
       placeholder="Enter your User name"
       pInputText
       [fluid]="true"
+      formControlName="username"
+      [ngClass]="{
+        'ng-invalid':
+          username!.invalid && (username!.touched || username!.dirty),
+        'ng-dirty': username!.invalid && (username!.touched || username!.dirty),
+      }"
     />
   </div>
 
   <div class="single-input">
     <label for="password">Password</label>
-    <p-password [toggleMask]="true"  [fluid] = "true"  inputId="password" placeholder="Enter your Password" [feedback]="false"/>
+    <p-password
+      [toggleMask]="true"
+      [fluid]="true"
+      inputId="password"
+      placeholder="Enter your Password"
+      [feedback]="false"
+      formControlName="password"
+      [ngClass]="{
+        'ng-invalid': password!.invalid && (password!.touched || password!.dirty),
+        'ng-dirty': password!.invalid && (password!.touched || password!.dirty),
+      }"
+    />
   </div>
 
   <div class="btn-submit-container">

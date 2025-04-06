@@ -84,7 +84,7 @@ export interface CategoryToReturnDto {
 export interface ConfirmEmailDto {
   /**
    * @minLength 1
-   * @pattern ^[0-9]{6}$
+   * @pattern ^[0-9]{4}$
    */
   code: string;
   /**
@@ -272,7 +272,7 @@ export interface RegisterDto {
    * @minLength 3
    * @maxLength 15
    */
-  lastName: string;
+  lastName?: string | null;
   /**
    * @minLength 1
    * @pattern ^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$

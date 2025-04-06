@@ -1,7 +1,14 @@
-<p class="description">
-  Regular users can sign in to browse, shop, and track orders.
-</p>
-<form class="login-form">
+@if(tempRole() == 'BusinessManager'){
+  <p class="description">
+    Are you a supplier? Log in to manage your listings and sales.  </p>
+}@else{
+  <p class="description">
+    Regular users can sign in to browse, shop, and track orders.
+  </p>
+}
+
+
+<form class="login-form" [formGroup]="loginForm" (submit)="login()">
   <div class="single-input">
     <label for="email">Email</label>
     <input
@@ -10,22 +17,36 @@
       placeholder="Enter your Email"
       pInputText
       [fluid]="true"
+      formControlName="email"
+      [ngClass]="{
+        'ng-invalid': email!.invalid && (email!.touched || email!.dirty),
+        'ng-dirty': email!.invalid && (email!.touched || email!.dirty),
+      }"
     />
   </div>
   <div class="single-input">
     <label for="password">Password</label>
-    <p-password [toggleMask]="true"  [fluid] = "true"  inputId="password" placeholder="Enter your Password" [feedback]="false"
+    <p-password
+      [toggleMask]="true"
+      [fluid]="true"
+      inputId="password"
+      placeholder="Enter your Password"
+      [feedback]="false"
+      formControlName="password"
+      [ngClass]="{
+        'ng-invalid': password!.invalid && (password!.touched || password!.dirty),
+        'ng-dirty': password!.invalid && (password!.touched || password!.dirty),
+      }"
     />
   </div>
   <div class="form-options">
     <label class="remember-me">
-      <p-checkbox  value="Remember me"  size="small" />
+      <p-checkbox value="Remember me" size="small" />
       <span>Remember me</span>
     </label>
     <a href="#" class="forgot-password">Forgot Password?</a>
   </div>
   <div class="btn-submit-container">
     <button type="submit" class="btn-submit">Login</button>
-
   </div>
 </form>

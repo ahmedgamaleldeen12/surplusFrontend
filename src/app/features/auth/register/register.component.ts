@@ -81,7 +81,7 @@ export class RegisterComponent {
     };
     let res = await this.apiBaseService.apiClient.accountRegisterCreate(data);
     if (res.data) {
-      console.log(res);
+      console.log(res.data);
     }
   }
 

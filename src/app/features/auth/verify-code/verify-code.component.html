@@ -1,24 +1,27 @@
+<p-toast></p-toast>
+
 <div class="verification-container">
   <h1 class="title">Verification Code</h1>
   <p class="subtitle">
     Enter the code sent to
-    <a class="email">adminffcom</a>
+    <a class="email">{{ email }}</a>
   </p>
 
   <div style="display: flex; justify-content: center; align-items: center">
     <p class="timer">
-      Code ends in <span class="timer-value"> {{ timeLeft }}</span>
+      Code ends in <span class="timer-value">{{ timeLeft }}</span>
     </p>
   </div>
-  <div class="code-input-container">
-    <p-inputotp [integerOnly]="true" size="large"  />
-  </div>
 
+  <div class="code-input-container">
+    <p-inputotp [(ngModel)]="code" [integerOnly]="true" size="large" />
+  </div>
 
   <p class="resend">
     Didn't receive a code?
     <a class="resend-link" (click)="resendCode()">Resend it.</a>
   </p>
+
   <div class="btn-verify-container">
     <button type="button" class="btn-verify" (click)="verifyCode()">Verify</button>
   </div>

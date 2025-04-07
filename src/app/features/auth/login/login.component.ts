@@ -17,6 +17,8 @@ import { Router } from '@angular/router';
 import { UserRole } from '../../../core/types/UserRole';
 import { AuthService } from '../../../core/services/Auth.service';
 import { TabsComponent } from "../tabs/tabs.component";
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-login',
@@ -29,8 +31,10 @@ import { TabsComponent } from "../tabs/tabs.component";
     ReactiveFormsModule,
     FormsModule,
     NgClass,
-    TabsComponent
-],
+    TabsComponent,
+    ToastModule
+  ],
+  providers: [MessageService],
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
@@ -42,6 +46,7 @@ export class LoginComponent implements OnInit {
   private readonly cookiService = inject(CookieService);
   private readonly router = inject(Router);
   private readonly authService = inject(AuthService);
+  private readonly messageService = inject(MessageService);
 
   get email() {
     return this.loginForm.get('email');
@@ -51,7 +56,7 @@ export class LoginComponent implements OnInit {
     return this.loginForm.get('password');
   }
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit() {
     this.initForm();
@@ -96,7 +101,11 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['./marketplace']);
       }
     } catch (err) {
-
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Verification Failed',
+        detail: 'The code is incorrect or expired.'
+      });
     } finally {
       this.isRequestFired = false;
     }

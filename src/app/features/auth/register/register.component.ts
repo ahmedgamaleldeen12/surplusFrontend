@@ -82,6 +82,7 @@ export class RegisterComponent {
     let res = await this.apiBaseService.apiClient.accountRegisterCreate(data);
     if (res.data) {
       console.log(res.data);
+      this.router.navigate(['./auth/verify-code'], { queryParams: { email: this.email?.value } });
     }
   }
 

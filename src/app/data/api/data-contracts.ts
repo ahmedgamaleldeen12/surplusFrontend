@@ -272,18 +272,13 @@ export interface RegisterDto {
 }
 
 export interface ResetPasswordDto {
-  /** @minLength 1 */
-  token: string;
-  /**
-   * @minLength 1
-   * @pattern ^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$
-   */
   email: string;
   /**
    * @minLength 6
    * @maxLength 15
    */
   newPassword: string;
+  CurrentPassword: string;
 }
 
 export interface User {

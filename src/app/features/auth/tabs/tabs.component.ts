@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, input, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -8,31 +8,31 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrl: './tabs.component.scss',
 })
 export class TabsComponent {
-  activeTab = signal<'login' | 'register'>('login');
+  // activeTab = signal<'login' | 'register'>('login');
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
-
+  activeTab = input.required<'login' | 'register'>();
   constructor() {}
 
   ngOnInit() {
-    this.checkCurrentRoute();
+    // this.checkCurrentRoute();
   }
 
   onTabChange(tab: 'login' | 'register') {
     this.router.navigate(['/auth', tab]);
   }
 
-  checkCurrentRoute() {
-    const currentPath = this.route.snapshot.firstChild?.url[0]?.path?.toLowerCase();
+  // checkCurrentRoute() {
+  //   const currentPath = this.route.snapshot.firstChild?.url[0]?.path?.toLowerCase();
 
-    if (currentPath === 'register') {
-      if (this.activeTab() !== 'register') {
-        this.activeTab.set('register');
-      }
-    } else {
-      if (this.activeTab() !== 'login') {
-        this.activeTab.set('login');
-      }
-    }
-  }
+  //   if (currentPath === 'register') {
+  //     if (this.activeTab() !== 'register') {
+  //       this.activeTab.set('register');
+  //     }
+  //   } else {
+  //     if (this.activeTab() !== 'login') {
+  //       this.activeTab.set('login');
+  //     }
+  //   }
+  // }
 }

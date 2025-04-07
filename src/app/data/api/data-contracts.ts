@@ -14,7 +14,6 @@ export interface Address {
   /** @format int32 */
   id?: number;
   firstName?: string | null;
-  lastName?: string | null;
   street?: string | null;
   city?: string | null;
   country?: string | null;
@@ -25,8 +24,6 @@ export interface Address {
 export interface AddressDto {
   /** @minLength 1 */
   firstName: string;
-  /** @minLength 1 */
-  lastName: string;
   /** @minLength 1 */
   street: string;
   /** @minLength 1 */
@@ -144,15 +141,6 @@ export interface LoginDto {
   password: string;
 }
 
-export interface LoginWithExternalDto {
-  /** @minLength 1 */
-  accessToken: string;
-  /** @minLength 1 */
-  userId: string;
-  /** @minLength 1 */
-  provider: string;
-}
-
 export interface MemberAddEditDto {
   id?: string | null;
   /** @minLength 1 */
@@ -160,8 +148,7 @@ export interface MemberAddEditDto {
   /** @minLength 1 */
   firstName: string;
   /** @minLength 1 */
-  lastName: string;
-  password?: string | null;
+  password: string;
   /** @minLength 1 */
   roles: string;
 }
@@ -170,7 +157,6 @@ export interface MemberViewDto {
   id?: string | null;
   userName?: string | null;
   firstName?: string | null;
-  lastName?: string | null;
   isLocked?: boolean;
   /** @format date-time */
   dateCreated?: string;
@@ -179,7 +165,6 @@ export interface MemberViewDto {
 
 export interface OrderAddress {
   firstName?: string | null;
-  lastName?: string | null;
   street?: string | null;
   city?: string | null;
   country?: string | null;
@@ -262,17 +247,17 @@ export interface ProductToReturnDtoPagination {
   data?: ProductToReturnDto[] | null;
 }
 
+export interface RefreshTokenReq {
+  email?: string | null;
+  refreshToken?: string | null;
+}
+
 export interface RegisterDto {
   /**
    * @minLength 3
    * @maxLength 15
    */
   firstName: string;
-  /**
-   * @minLength 3
-   * @maxLength 15
-   */
-  lastName?: string | null;
   /**
    * @minLength 1
    * @pattern ^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$
@@ -284,25 +269,6 @@ export interface RegisterDto {
    */
   password: string;
   role?: string | null;
-}
-
-export interface RegisterWithExternal {
-  /**
-   * @minLength 3
-   * @maxLength 15
-   */
-  firstName: string;
-  /**
-   * @minLength 3
-   * @maxLength 15
-   */
-  lastName: string;
-  /** @minLength 1 */
-  accessToken: string;
-  /** @minLength 1 */
-  userId: string;
-  /** @minLength 1 */
-  provider: string;
 }
 
 export interface ResetPasswordDto {
@@ -340,19 +306,20 @@ export interface User {
   accessFailedCount?: number;
   /** @minLength 1 */
   firstName: string;
-  /** @minLength 1 */
-  lastName: string;
   /** @format date-time */
   dateOfCreation?: string;
   provider?: string | null;
   emailConfirmationCode?: string | null;
   address?: Address;
+  refreshToken?: string | null;
+  /** @format date-time */
+  refreshTokenExpiryTime?: string;
 }
 
 export interface UserDto {
   firstName?: string | null;
-  lastName?: string | null;
   jwt?: string | null;
+  refreshToken?: string | null;
 }
 
 export interface CreateCategoryDto {

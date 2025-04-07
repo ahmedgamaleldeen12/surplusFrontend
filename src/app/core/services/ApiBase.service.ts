@@ -64,7 +64,7 @@ export class ApiBaseService {
     const refreshToken = this.authService.getRefreshToken();
     const accessToken = this.authService.getToken();
 
-    const res = await this.apiClient.accountRefreshUserTokenList();
+    // const res = await this.apiClient.accountRefreshUserTokenList();
 
     //update cookie data
   }

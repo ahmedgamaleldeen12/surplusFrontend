@@ -22,7 +22,6 @@ import {
   CustomerBasketDto,
   DeliveryMethod,
   LoginDto,
-  LoginWithExternalDto,
   MemberAddEditDto,
   MemberViewDto,
   OrderDto,
@@ -30,8 +29,8 @@ import {
   ProductCategory,
   ProductToReturnDto,
   ProductToReturnDtoPagination,
+  RefreshTokenReq,
   RegisterDto,
-  RegisterWithExternal,
   ResetPasswordDto,
   UserDto,
 } from "./data-contracts";
@@ -42,13 +41,15 @@ export class Api<SecurityDataType = unknown> extends HttpClient<SecurityDataType
    * No description
    *
    * @tags Account
-   * @name AccountRefreshUserTokenList
-   * @request GET:/api/Account/refresh-user-token
+   * @name AccountRefreshUserTokenCreate
+   * @request POST:/api/Account/refresh-user-token
    */
-  accountRefreshUserTokenList = (params: RequestParams = {}) =>
+  accountRefreshUserTokenCreate = (data: RefreshTokenReq, params: RequestParams = {}) =>
     this.request<UserDto, any>({
       path: `/api/Account/refresh-user-token`,
-      method: "GET",
+      method: "POST",
+      body: data,
+      type: ContentType.Json,
       format: "json",
       ...params,
     });
@@ -137,38 +138,6 @@ export class Api<SecurityDataType = unknown> extends HttpClient<SecurityDataType
       method: "PUT",
       body: data,
       type: ContentType.Json,
-      ...params,
-    });
-  /**
-   * No description
-   *
-   * @tags Account
-   * @name AccountRegisterWithThirdPartyCreate
-   * @request POST:/api/Account/register-with-third-party
-   */
-  accountRegisterWithThirdPartyCreate = (data: RegisterWithExternal, params: RequestParams = {}) =>
-    this.request<UserDto, any>({
-      path: `/api/Account/register-with-third-party`,
-      method: "POST",
-      body: data,
-      type: ContentType.Json,
-      format: "json",
-      ...params,
-    });
-  /**
-   * No description
-   *
-   * @tags Account
-   * @name AccountLoginWithThirdPartyCreate
-   * @request POST:/api/Account/login-with-third-party
-   */
-  accountLoginWithThirdPartyCreate = (data: LoginWithExternalDto, params: RequestParams = {}) =>
-    this.request<UserDto, any>({
-      path: `/api/Account/login-with-third-party`,
-      method: "POST",
-      body: data,
-      type: ContentType.Json,
-      format: "json",
       ...params,
     });
   /**

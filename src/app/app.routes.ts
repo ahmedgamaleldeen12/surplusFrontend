@@ -4,6 +4,9 @@ import { LoginComponent } from './features/auth/login/login.component';
 import { RegisterComponent } from './features/auth/register/register.component';
 import { HomeComponent } from './features/home/home.component';
 import { roleGuard } from './core/guards/role.guard';
+import { VerifyCodeComponent } from './features/auth/verify-code/verify-code.component';
+import { ForgetPasswordComponent } from './features/auth/forget-password/forget-password.component';
+import { ChangePasswordComponent } from './features/auth/change-password/change-password.component';
 
 export const routes: Routes = [
   {
@@ -29,6 +32,21 @@ export const routes: Routes = [
         path: 'register',
         component: RegisterComponent,
         title: 'Register',
+      },
+      {
+        path: 'verify-code',
+        component: VerifyCodeComponent,
+        title: 'Verify Code',
+      },
+      {
+        path: 'forget-password',
+        component: ForgetPasswordComponent,
+        title: 'Forget Password',
+      },
+      {
+        path: 'change-password',
+        component: ChangePasswordComponent,
+        title: 'Change Password',
       },
     ],
   },

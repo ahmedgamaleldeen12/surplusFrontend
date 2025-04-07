@@ -16,6 +16,7 @@ import { CookiesConstants } from '../../../core/constants/CookiesConstants';
 import { Router } from '@angular/router';
 import { UserRole } from '../../../core/types/UserRole';
 import { AuthService } from '../../../core/services/Auth.service';
+import { TabsComponent } from "../tabs/tabs.component";
 
 @Component({
   selector: 'app-login',
@@ -28,7 +29,8 @@ import { AuthService } from '../../../core/services/Auth.service';
     ReactiveFormsModule,
     FormsModule,
     NgClass,
-  ],
+    TabsComponent
+],
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;

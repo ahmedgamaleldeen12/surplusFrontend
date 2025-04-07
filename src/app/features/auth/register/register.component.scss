@@ -1,3 +1,11 @@
+/* Welcome text */
+h1 {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  color: #000;
+  text-align: center;
+}
 
 .description {
   color: #5B5B5B;
@@ -11,7 +19,6 @@
   width: 100%;
   max-width: 450px;
   margin-bottom: 1.5rem;
-
 }
 
 .register-form label {

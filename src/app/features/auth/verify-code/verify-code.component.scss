@@ -1,0 +1,94 @@
+.verification-container {
+  width: 100%;
+  max-width: 450px;
+  margin: 1.5rem 0;
+}
+
+.title {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  font-weight: 500;
+  color: black;
+  text-align: center;
+
+}
+
+.subtitle {
+  color: black;
+  margin-bottom: 2rem;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.email {
+  color: #546FB4;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.code-input-container {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+}
+:host  ::ng-deep .p-inputotp-input	{
+  background-color: #F6F6F6 !important;
+  border-radius: 8.32px;
+  border: none;
+}
+
+
+.timer {
+  color: #797F8F;
+  margin-bottom: 1rem;
+  text-align: center;
+  background-color: #F2F2F2;
+  width: fit-content;
+  border-radius: 7.68px;
+  padding: 0.5rem 1rem;
+}
+.timer-value{
+  color: var(--main-color);
+  font-weight: 700;
+  padding-left:1rem ;
+}
+
+.resend {
+  text-align: center;
+  color: #797F8F;
+  margin-bottom: 4rem;
+  font-weight: 400;
+}
+
+.resend-link {
+  color: var(--main-color);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+
+
+
+.btn-verify {
+  width: 50%;
+  padding: 0.75rem;
+  background: var(--main-color);
+  color: white;
+  border: none;
+  font-weight: 400;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  border-radius: 36px;
+  font-size: 1rem;
+}
+
+.btn-verify:hover {
+  background: #1D4ED8;
+}
+.btn-verify-container{
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

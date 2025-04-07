@@ -15,6 +15,7 @@ import { UserRole } from '../../../core/types/UserRole';
 import { AuthService } from '../../../core/services/Auth.service';
 import { NgClass } from '@angular/common';
 import { RegisterDto } from '../../../data/api/data-contracts';
+import { TabsComponent } from "../tabs/tabs.component";
 
 @Component({
   selector: 'app-register',
@@ -24,7 +25,8 @@ import { RegisterDto } from '../../../data/api/data-contracts';
     NgClass,
     FormsModule,
     ReactiveFormsModule,
-  ],
+    TabsComponent
+],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })
@@ -76,7 +78,6 @@ export class RegisterComponent {
       email: this.email?.value,
       password: this.password?.value,
       role: this.tempRole(),
-      lastName: 'ddd',
     };
     let res = await this.apiBaseService.apiClient.accountRegisterCreate(data);
     if (res.data) {

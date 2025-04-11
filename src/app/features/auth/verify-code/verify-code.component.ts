@@ -88,17 +88,15 @@ export class VerifyCodeComponent implements OnInit {
       });
 
       if (res.status === 200) {
-        // debugger
+        debugger
         this.messageService.add({
           severity: 'success',
           summary: 'Verification Successful',
           detail: res.data?.value?.message || 'The verification code successfully.'
         });
-        debugger
+        // debugger
         if (this.status == 'forgot-password')
-          this.router.navigate(['./auth/change-password'], {
-            queryParams: { email: this.email }
-          });
+          this.router.navigate(['./auth/change-password'], {queryParams: { email: this.email }});
         else
           this.router.navigate(['./marketplace']);
       }

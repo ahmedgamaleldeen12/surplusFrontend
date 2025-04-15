@@ -5,6 +5,7 @@ import { providePrimeNG } from 'primeng/config';
 import { routes } from './app.routes';
 import lara from '@primeng/themes/lara';
 import { definePreset } from '@primeng/themes';
+import { provideHttpClient, withFetch } from '@angular/common/http';
 
 const MyPreset = definePreset(lara, {
   semantic: {
@@ -28,6 +29,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideAnimationsAsync(),
+    provideHttpClient(withFetch()),
     providePrimeNG({
       theme: {
         preset: MyPreset,

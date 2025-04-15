@@ -53,7 +53,7 @@
 
 
     <div class="products-grid" [ngClass]="view">
-      <app-product-item *ngFor="let i of [1,2,3,4,5,6,7]"></app-product-item>
+      <app-product-item *ngFor="let product of products" [product]="product"></app-product-item>
     </div>
 
     <div class="pagination-container">

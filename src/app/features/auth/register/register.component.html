@@ -1,13 +1,13 @@
-
 <h1>Welcome!</h1>
-<div style="display: flex; justify-content: center;align-items: center;">
+<div style="display: flex; justify-content: center; align-items: center">
   <app-tabs [activeTab]="'register'"></app-tabs>
 </div>
 
-@if(tempRole() == 'BusinessManager'){
+@if (tempRole() == "BusinessManager") {
   <p class="description">
-    Are you a supplier? Log in to manage your listings and sales.  </p>
-}@else{
+    Are you a supplier? Log in to manage your listings and sales.
+  </p>
+} @else {
   <p class="description">
     Regular users can sign in to browse, shop, and track orders.
   </p>
@@ -56,10 +56,51 @@
       [feedback]="false"
       formControlName="password"
       [ngClass]="{
-        'ng-invalid': password!.invalid && (password!.touched || password!.dirty),
+        'ng-invalid':
+          password!.invalid && (password!.touched || password!.dirty),
         'ng-dirty': password!.invalid && (password!.touched || password!.dirty),
       }"
     />
+    @if (password!.errors && password!.touched) {
+      <div style="padding: 5px">
+        <img
+          style="vertical-align: middle"
+          src="./assets/icons/error.svg"
+          alt=""
+        />
+        <small class="text-danger" style="padding: 5px">Min 8 chars with upper, lower, digit & special char.</small
+        >
+      </div>
+    }
+  </div>
+  <div class="single-input">
+    <label for="confirmpassword">Confrim Password</label>
+    <p-password
+      [toggleMask]="true"
+      [fluid]="true"
+      inputId="password"
+      placeholder="Confirm your Password"
+      [feedback]="false"
+      formControlName="rpassword"
+      [ngClass]="{
+        'ng-invalid':
+          rpassword!.invalid && (rpassword!.touched || rpassword!.dirty),
+        'ng-dirty':
+          rpassword!.invalid && (rpassword!.touched || rpassword!.dirty),
+      }"
+    />
+    @if ((rpassword!.errors?.['required'] || rpassword!.errors?.['mismatch']) && rpassword!.touched) {
+      <div style="padding: 5px">
+        <img
+          style="vertical-align: middle"
+          src="./assets/icons/error.svg"
+          alt=""
+        />
+        <small class="text-danger" style="padding: 5px"
+          >Passwords do not match.</small
+        >
+      </div>
+    }
   </div>
 
   <div class="btn-submit-container">

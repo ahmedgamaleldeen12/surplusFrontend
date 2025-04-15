@@ -1,5 +1,12 @@
+.bg{
+  background-color: white;
+}
+
+
 :host ::ng-deep {
   .p-carousel {
+    margin-top: 2rem;
+
     .p-carousel-indicators {
       display: flex;
       justify-content: center;

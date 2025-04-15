@@ -1,0 +1,136 @@
+.product-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.product-gallery {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+
+  .gallery-item {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+
+    img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      border-radius: 10px;
+    }
+  }
+}
+
+.product-info {
+  .brand {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+  }
+
+  .product-title {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  .product-specs {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 2rem;
+    line-height: 1.5;
+  }
+
+  .price-section {
+    margin-bottom: 2rem;
+
+    .price {
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+
+      .currency {
+        margin-left: 0.5rem;
+      }
+    }
+
+    .tax {
+      font-size: 0.9rem;
+      color: #666;
+    }
+  }
+
+  .actions {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+
+    .quantity {
+      select {
+        padding: 0.5rem 1rem;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background: white;
+        min-width: 80px;
+      }
+    }
+
+    .add-to-cart {
+      flex: 1;
+      padding: 1rem 2rem;
+      background: #0071e3;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s;
+
+      &:hover {
+        background: #0077ed;
+      }
+    }
+  }
+
+  .delivery-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: #f5f5f7;
+    border-radius: 8px;
+
+    .delivery-icon {
+      font-size: 1.5rem;
+    }
+
+    .delivery-text {
+      display: flex;
+      flex-direction: column;
+
+      strong {
+        font-size: 0.9rem;
+      }
+
+      span {
+        font-size: 0.8rem;
+        color: #666;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .product-container {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+}

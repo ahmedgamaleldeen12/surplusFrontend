@@ -98,7 +98,11 @@ export class LoginComponent implements OnInit {
           false,
           'Lax',
         );
-        this.router.navigate(['./marketplace']);
+        if(this.authService.getTempAuthRole() == 'User'){
+          this.router.navigate(['./marketplace']);
+        }else{
+          // this.router.navigate(['./marketplace']);
+        }
       }
     } catch (err) {
       this.messageService.add({

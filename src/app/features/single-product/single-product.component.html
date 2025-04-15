@@ -1,0 +1,51 @@
+<app-header></app-header>
+
+<div class="product-container">
+  <div class="product-gallery">
+    <div class="gallery-item active">
+      <img src="https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mbp14-spacegray-select-202310?wid=904&hei=840&fmt=jpeg&qlt=90&.v=1697311054290" alt="MacBook Pro Space Grey Front View">
+    </div>
+    <div class="gallery-item">
+      <img src="https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mbp14-spacegray-select-202310_TOP?wid=904&hei=840&fmt=jpeg&qlt=90&.v=1697311054290" alt="MacBook Pro Space Grey Top View">
+    </div>
+    <div class="gallery-item">
+      <img src="https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mbp14-spacegray-select-202310_SIDE?wid=904&hei=840&fmt=jpeg&qlt=90&.v=1697311054290" alt="MacBook Pro Space Grey Side View">
+    </div>
+  </div>
+
+  <div class="product-info">
+    <div class="brand">Apple</div>
+    <h1 class="product-title">Apple MacBook Pro 14.2 Space Grey</h1>
+
+    <div class="product-specs">
+      M3 Pro - M3 Pro 14-core GPU - 18 GB RAM - 512 GB SSD - 14.2" 3024 x 1964  120 Hz - Wi-Fi 6 - space grey
+    </div>
+
+    <div class="price-section">
+      <div class="price">
+        <span class="amount">{{price}}</span>
+        <span class="currency">{{currency}}</span>
+      </div>
+      <div class="tax">{{tax}} Excluded tax</div>
+    </div>
+
+    <div class="actions">
+      <div class="quantity">
+        <select>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+        </select>
+      </div>
+      <button class="add-to-cart" (click)="addToCart()">Add to Cart</button>
+    </div>
+
+    <div class="delivery-info">
+      <i class="delivery-icon">🚚</i>
+      <div class="delivery-text">
+        <strong>Express 2-day stock</strong>
+        <span>Free Shipping</span>
+      </div>
+    </div>
+  </div>
+</div>

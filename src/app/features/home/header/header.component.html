@@ -9,8 +9,8 @@
   </div>
 
   <div class="actions">
-    <button class="register">Register</button>
-    <button class="login">Login as Supplier</button>
+    <button class="register" (click)="navigate('./auth/register', 'User')">Register</button>
+    <button class="login" (click)="navigate('./auth/login', 'BusinessManager')">Login as Supplier</button>
     <div class="cart">
        <img src="./assets/icons/cart.svg" alt="cart icon">
       <span class="badge">1</span>
@@ -20,14 +20,3 @@
     </div>
   </div>
 </header>
-
-<!-- <nav class="categories">
-  <button class="category-btn active">Groceries <span>&#x25BE;</span></button>
-  <button class="category-btn">Premium Fruits <span>&#x25BE;</span></button>
-  <button class="category-btn">Home & Kitchen <span>&#x25BE;</span></button>
-  <button class="category-btn">Fashion <span>&#x25BE;</span></button>
-  <button class="category-btn">Electronics <span>&#x25BE;</span></button>
-  <button class="category-btn">Beauty <span>&#x25BE;</span></button>
-  <button class="category-btn">Home Improvement <span>&#x25BE;</span></button>
-  <button class="category-btn">Sports, Toys & Luggage <span>&#x25BE;</span></button>
-</nav> -->

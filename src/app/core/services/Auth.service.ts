@@ -3,12 +3,19 @@ import { CookieService } from 'ngx-cookie-service';
 import { CookiesConstants } from '../constants/CookiesConstants';
 import { jwtDecode } from 'jwt-decode';
 import { UserRole } from '../types/UserRole';
+import { IAddress } from '../models/address';
+import { environment } from '../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  baseUrl = environment.apiUrl;
+
   private readonly cookieService = inject(CookieService);
+  private readonly http = inject(HttpClient);
+
   constructor() {}
   isAuthenticated(): boolean {
     return true;
@@ -49,5 +56,12 @@ export class AuthService {
       CookiesConstants.authUserRefreshToken,
     ].forEach((cookie) => this.cookieService.delete(cookie, '/'));
     this.cookieService.deleteAll();
+  }
+  getUserAddress() {
+    return this.http.get<IAddress>(this.baseUrl + 'account/address');
+  }
+
+  updateUserAddress(address: IAddress) {
+    return this.http.put<IAddress>(this.baseUrl + 'account/address', address);
   }
 }

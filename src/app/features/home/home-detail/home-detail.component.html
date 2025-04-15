@@ -1,79 +1,81 @@
 <div class="container">
   <div class="search-filter">
-    <div class="search-box">
+    <div class="search-bar">
       <input type="text" placeholder="Search Products" />
-      <i class="icon-search"></i>
+      <img class="search-icon" src="./assets/icons/search-icon.svg" alt="" />
     </div>
 
     <div class="actions">
       <button class="sort-button">
-        <i class="icon-sort"></i>
+        <i style="color: #1e293b" class="pi pi-sort-alt"></i>
       </button>
 
       <div class="view-toggle">
-        <button [class.active]="view === 'list'" (click)="setView('list')">List</button>
-        <button [class.active]="view === 'grid'" (click)="setView('grid')">Grid</button>
-      </div>
+        <button
+          class="list"
+          [class.active]="view === 'list'"
+          (click)="setView('list')"
+        >
+          <i class="pi pi-bars"></i>
+          List
+        </button>
+        <button
+          class="grid"
+          [class.active]="view === 'grid'"
+          (click)="setView('grid')"
+        >
+          <i class="pi pi-th-large"> </i>
 
-      <select class="sort-dropdown">
-        <option>Price: High to low</option>
-        <option>Price: Low to High</option>
-        <option>Dropdown menu item</option>
-        <option>Dropdown menu item</option>
-        <option>Dropdown menu item</option>
-      </select>
+          Grid
+        </button>
+      </div>
     </div>
   </div>
 
   <div class="content">
     <aside class="filters">
-      <div class="filter-header">
-        <h3>Filter</h3>
-        <a href="#">Reset</a>
-      </div>
-
-      <div class="filter-section">
-        <h4>Categories</h4>
-        <label><input type="checkbox" /> Category1</label>
-        <label><input type="checkbox" /> Category1</label>
-        <label><input type="checkbox" /> Category1</label>
-        <label><input type="checkbox" checked /> Category1</label>
-        <a class="show-all" href="#">Show All</a>
-      </div>
-
-      <div class="filter-section">
-        <h4>Price range</h4>
-        <div class="range-values">
-          <span>665</span>
-          <span>1,120</span>
+      <div class="side-container">
+        <div class="filter-header">
+          <h3>Filter</h3>
+          <a href="#">Reset</a>
         </div>
-        <input type="range" min="0" max="2000" />
-      </div>
-    </aside>
 
+        <div class="filter-section">
+          <div class="subtitle">
+            <h4>Brands</h4>
+          </div>
+          <div class="categories">
+            <label><input type="checkbox" /> Category1</label>
+            <label><input type="checkbox" /> Category1</label>
+            <label><input type="checkbox" /> Category1</label>
+            <label><input type="checkbox" checked /> Category1</label>
+          </div>
+        </div>
+
+        <div class="filter-section">
+          <div class="subtitle">
+            <h4>Price range</h4>
+          </div>
+          <div class="categories">
+            <div class="range-values">
+              <span>{{ this.rangeValues[0] }}</span>
+              <span>{{ this.rangeValues[1] }}</span>
+            </div>
+            <p-slider
+              [(ngModel)]="rangeValues"
+              [range]="true"
+              [max]="2000"
+              styleClass="w-56"
+            />
+          </div>
+        </div>
+      </div>
+
+    </aside>
 
     <div class="products-grid" [ngClass]="view">
       <app-product-item *ngFor="let product of products" [product]="product"></app-product-item>
     </div>
 
-    <div class="pagination-container">
-      <div class="entries-info">Showing 1 to 10 of 200 entries</div>
-
-      <div class="pagination">
-        <button class="page-btn">«</button>
-        <button class="page-btn">‹</button>
-        <button class="page-btn active">1</button>
-        <button class="page-btn">2</button>
-        <button class="page-btn">4</button>
-        <button class="page-btn">5</button>
-        <button class="page-btn">›</button>
-        <button class="page-btn">»</button>
-      </div>
-
-      <select class="dropdown">
-        <option>Test</option>
-        <option>Another Option</option>
-      </select>
-    </div>
   </div>
 </div>

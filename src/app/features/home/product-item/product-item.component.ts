@@ -1,5 +1,6 @@
+import { Product } from './../../../core/types/UserRole';
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, input, Input } from '@angular/core';
 import { BasketService } from '../../basket/basket.service';
 import { IProduct } from '../../../core/models/product';
 
@@ -7,7 +8,7 @@ import { IProduct } from '../../../core/models/product';
   selector: 'app-product-item',
   imports: [CommonModule],
   templateUrl: './product-item.component.html',
-  styleUrl: './product-item.component.scss'
+  styleUrl: './product-item.component.scss',
 })
 export class ProductItemComponent {
   @Input() product!: any;

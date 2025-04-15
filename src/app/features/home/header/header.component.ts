@@ -1,5 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { UserRole } from '../../../core/types/UserRole';
+import { AuthService } from '../../../core/services/Auth.service';
 
 @Component({
   selector: 'app-header',
@@ -8,5 +11,14 @@ import { Component } from '@angular/core';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
+  private readonly  router = inject(Router);
+  private readonly  auth = inject(AuthService);
 
+
+  navigate(url : string , tempRole ?: UserRole ){
+    if(tempRole){
+      this.auth.setTempAuthRole(tempRole);
+    }
+    this.router.navigate([url])
+  }
 }

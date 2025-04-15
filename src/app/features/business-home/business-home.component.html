@@ -1,0 +1,116 @@
+<header class="header">
+  <div class="logo">
+    <img src="assets/images/Nubiq-Logo.svg" alt="Nubiq" />
+  </div>
+  <div class="nav-text">
+    <img src="./assets/icons/bag.svg" alt="" />
+    <p><span>Hello, Ahmed ,</span>you are logged in as a supplier.</p>
+  </div>
+</header>
+
+<div class="container">
+  <h2>Add new listings</h2>
+
+  <div class="form-group">
+    <div class="input-group">
+      <label>Product Name</label>
+      <input type="text" placeholder="enter product name" />
+    </div>
+
+    <div class="input-group currency">
+      <label>Price</label>
+      <input type="text" placeholder="enter product price" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="input-group">
+      <label>Brand Name</label>
+      <input type="text" placeholder="enter brand name" />
+    </div>
+
+    <div class="input-group">
+      <label>SKU</label>
+      <input type="text" placeholder="enter brand name" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="input-group">
+      <label>Model Specifications</label>
+      <input type="text" placeholder="enter description" />
+    </div>
+
+    <div class="input-group">
+      <label>Category</label>
+      <input type="text" placeholder="enter product category" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="input-group">
+      <label>Quantity</label>
+      <input type="text" placeholder="enter product quantity" />
+    </div>
+  </div>
+
+  <div class="upload-area">
+    <svg
+      class="icon"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <path
+        d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"
+      />
+    </svg>
+    <div class="upload-text">Click here</div>
+    <div class="upload-subtext">to upload or drop photos here</div>
+  </div>
+
+  <button class="submit-btn">Add New Listing</button>
+</div>
+
+
+
+<div class="card">
+  <h1>Your Listings</h1>
+  <p-table
+    [value]="listings"
+    [paginator]="true"
+    [rows]="5"
+    [showCurrentPageReport]="true"
+    [tableStyle]="{'min-width': '60rem'}"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [rowsPerPageOptions]="[5, 10, 20, 50]"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Date</th>
+        <th>Name</th>
+        <th>Brand name</th>
+        <th>Price</th>
+        <th>Status</th>
+        <th>Quantity</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-listing>
+      <tr>
+        <td>{{listing.date}}</td>
+        <td>{{listing.name}}</td>
+        <td>{{listing.brandName}}</td>
+        <td>{{listing.price}}</td>
+        <td>
+          <span class="status-badge" [class]="'status-' + listing.status.toLowerCase()">
+            {{listing.status}}
+          </span>
+        </td>
+        <td>{{listing.quantity}}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<app-footer></app-footer>

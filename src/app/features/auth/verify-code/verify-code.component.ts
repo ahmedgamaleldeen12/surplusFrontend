@@ -60,7 +60,6 @@ export class VerifyCodeComponent implements OnInit {
       const res = await this.apiBaseService.apiClient.accountResendEmailConfirmationLinkCreate(this.email);
 
       if (res.status === 200) {
-        // debugger
         this.messageService.add({
           severity: 'success',
           summary: 'Verification Resent Successful',
@@ -68,7 +67,6 @@ export class VerifyCodeComponent implements OnInit {
         });
       }
     } catch (error) {
-      console.error('Resend code failed', error);
       this.messageService.add({
         severity: 'error',
         summary: 'Error',
@@ -88,19 +86,15 @@ export class VerifyCodeComponent implements OnInit {
       });
 
       if (res.status === 200) {
-        // debugger
         this.messageService.add({
           severity: 'success',
           summary: 'Verification Successful',
           detail: res.data?.value?.message || 'The verification code successfully.'
         });
-        debugger
         if (this.status == 'forgot-password')
-          this.router.navigate(['./auth/change-password'], {
-            queryParams: { email: this.email }
-          });
+          this.router.navigate(['./auth/change-password'], {queryParams: { email: this.email }});
         else
-          this.router.navigate(['./marketplace']);
+          this.router.navigate(['./auth/login']);
       }
     } catch (err) {
       this.messageService.add({

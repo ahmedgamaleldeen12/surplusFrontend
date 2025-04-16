@@ -1,22 +1,26 @@
-<p-carousel [value]="banners" [autoplayInterval]="3000" [showNavigators]="true" [showIndicators]="true"
-  [circular]="true" [responsiveOptions]="responsiveOptions">
+<div class="content-cotainer bg">
 
-  <ng-template let-banner pTemplate="item">
-    <div class="banner">
-      <div class="banner-content">
-        <div class="text-section">
-          <p class="subtitle">{{ banner.subtitle }}</p>
-          <h1 class="title">{{ banner.title }}</h1>
-          <p class="discount">{{ banner.discount }}</p>
-        </div>
-        <div class="image-section">
-          <img [src]="banner.image" [alt]="banner.title" />
-        </div>
+<p-carousel [value]="banners" [autoplayInterval]="3000" [showNavigators]="true" [showIndicators]="true"
+[circular]="true" [responsiveOptions]="responsiveOptions">
+
+<ng-template let-banner pTemplate="item">
+  <div class="banner">
+    <div class="banner-content">
+      <div class="text-section">
+        <p class="subtitle">{{ banner.subtitle }}</p>
+        <h1 class="title">{{ banner.title }}</h1>
+        <p class="discount">{{ banner.discount }}</p>
+      </div>
+      <div class="image-section">
+        <img [src]="banner.image" [alt]="banner.title" />
       </div>
     </div>
-  </ng-template>
+  </div>
+</ng-template>
 </p-carousel>
-
-<div class="benefit-section">
-  <img src="assets/images/benefits.png" alt="Benefits" />
 </div>
+
+
+<!-- <div class="benefit-section">
+  <img src="assets/images/benefits.png" alt="Benefits" />
+</div> -->

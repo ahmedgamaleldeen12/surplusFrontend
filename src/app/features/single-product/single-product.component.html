@@ -1,0 +1,68 @@
+<app-header></app-header>
+
+<div class="product-page">
+  <div class="product-header">
+    <span class="brand">Apple</span>
+    <h1>Apple MacBook Pro 14.2 Space Grey</h1>
+    <p class="specs">
+      M3 Pro - M3 Pro 14-core GPU - 18 GB RAM - 512 GB SSD - 14.2" 2024 • 1994
+      120 Hz - Wi-Fi 6 - space grey
+    </p>
+  </div>
+
+  <div class="product-layout">
+    <div class="product-images">
+      <!-- <p-galleria
+        [value]="images"
+        [showIndicators]="true"
+        [showThumbnails]="false"
+        [containerStyle]="{ 'max-width': '640px' }"
+      >
+        <ng-template #item let-item>
+          <img [src]="item.itemImageSrc" style="width: 100%; display: block" />
+        </ng-template>
+      </p-galleria> -->
+    </div>
+
+    <div class="product-info">
+      <div class="price-section">
+        <div class="price">3,850 <span>SAR</span></div>
+        <div class="tax">572 Excluded tax</div>
+      </div>
+
+      <div class="purchase-options">
+        <select class="qty-select">
+          <option>1 Item</option>
+          <option>2 Items</option>
+          <option>3 Items</option>
+        </select>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+
+      <div class="delivery-info">
+        <img
+          src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxjaXJjbGUgY3g9IjEyIiBjeT0iMTIiIHI9IjEwIi8+PHBhdGggZD0iTTEyIDZ2NiIvPjxwYXRoIGQ9Ik0xMiAxNmguMDEiLz48L3N2Zz4="
+          alt="Delivery Icon"
+        />
+        <span>Select to see area</span>
+        <span class="delivery-time">2-3 working days</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="product-details">
+    <div class="detail-section">
+      <h2>Functions</h2>
+      <div class="detail-content">
+        <h3>Crisp Pro</h3>
+        <p>
+          The M3 chip elevates the exceptional performance of the M1
+          architecture to a whole new professional level. Even the most
+          ambitious projects become easily affordable.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

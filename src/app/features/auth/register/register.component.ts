@@ -1,5 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   FormGroup,
   FormsModule,
@@ -15,7 +16,7 @@ import { UserRole } from '../../../core/types/UserRole';
 import { AuthService } from '../../../core/services/Auth.service';
 import { NgClass } from '@angular/common';
 import { RegisterDto } from '../../../data/api/data-contracts';
-import { TabsComponent } from "../tabs/tabs.component";
+import { TabsComponent } from '../tabs/tabs.component';
 
 @Component({
   selector: 'app-register',
@@ -25,8 +26,8 @@ import { TabsComponent } from "../tabs/tabs.component";
     NgClass,
     FormsModule,
     ReactiveFormsModule,
-    TabsComponent
-],
+    TabsComponent,
+  ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })
@@ -48,6 +49,9 @@ export class RegisterComponent {
   get password() {
     return this.registerForm.get('password');
   }
+  get rpassword() {
+    return this.registerForm.get('rpassword');
+  }
   get username() {
     return this.registerForm.get('username');
   }
@@ -58,17 +62,29 @@ export class RegisterComponent {
   }
 
   initForm() {
-    this.registerForm = this.fb.group({
-      email: [null, [Validators.required, Validators.email]],
-      username: [null, Validators.required],
-      password: [null, Validators.required],
-    });
+    this.registerForm = this.fb.group(
+      {
+        email: [null, [Validators.required, Validators.email]],
+        username: [null, Validators.required],
+        password: [
+          null,
+          [
+            Validators.required,
+            Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/),
+          ],
+        ],
+        rpassword: [null, Validators.required],
+      },
+      { validators: this.passwordMatchValidator } // ✅ Apply at group level
+    );
   }
 
   async register() {
     this.markControlAsTouchedAndDirty('email');
     this.markControlAsTouchedAndDirty('username');
     this.markControlAsTouchedAndDirty('password');
+    this.markControlAsTouchedAndDirty('rpassword');
+    console.log(this.password);
 
     if (this.registerForm.invalid) {
       return;
@@ -81,8 +97,9 @@ export class RegisterComponent {
     };
     let res = await this.apiBaseService.apiClient.accountRegisterCreate(data);
     if (res.data) {
-      console.log(res.data);
-      this.router.navigate(['./auth/verify-code'], { queryParams: { email: this.email?.value } });
+      this.router.navigate(['./auth/verify-code'], {
+        queryParams: { email: this.email?.value },
+      });
     }
   }
 
@@ -92,6 +109,16 @@ export class RegisterComponent {
     if (control?.errors) {
       control.markAsTouched();
       control.markAsDirty();
+    }
+  }
+  private passwordMatchValidator(form: AbstractControl) {
+    const password = form.get('password')?.value;
+    const confirmPassword = form.get('rpassword')?.value;
+    if (password !== confirmPassword) {
+      form.get('rpassword')?.setErrors({ mismatch: true });
+      return { mismatch: true };
+    } else {
+      return null;
     }
   }
   //#endregion

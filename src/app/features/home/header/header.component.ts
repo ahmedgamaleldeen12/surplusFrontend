@@ -3,6 +3,10 @@ import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserRole } from '../../../core/types/UserRole';
 import { AuthService } from '../../../core/services/Auth.service';
+import { Observable } from 'rxjs';
+import { IBasket } from '../../../core/models/basket';
+import { IUser } from '../../../core/models/user';
+import { BasketService } from '../../basket/basket.service';
 
 @Component({
   selector: 'app-header',
@@ -14,6 +18,19 @@ export class HeaderComponent {
   private readonly  router = inject(Router);
   private readonly  auth = inject(AuthService);
 
+  basket$!: Observable<IBasket>;
+  currentUser$!: Observable<IUser>;
+
+  constructor(private basketService: BasketService, private accountService: AuthService) { }
+
+  ngOnInit(): void {
+    this.basket$ = this.basketService.basket$;
+    this.currentUser$ = this.accountService.currentUser$;
+  }
+
+  logout() {
+    this.accountService.logout();
+  }
 
   navigate(url : string , tempRole ?: UserRole ){
     if(tempRole){

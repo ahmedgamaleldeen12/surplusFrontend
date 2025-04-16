@@ -10,6 +10,8 @@ import { ChangePasswordComponent } from './features/auth/change-password/change-
 import { SingleProductComponent } from './features/single-product/single-product.component';
 import { BusinessHomeComponent } from './features/business-home/business-home.component';
 import { ProfileComponent } from './features/profile/profile.component';
+import { BasketComponent } from './features/basket/basket/basket.component';
+import { CheckoutComponent } from './features/checkout/checkout.component';
 
 export const routes: Routes = [
   {
@@ -58,14 +60,14 @@ export const routes: Routes = [
     component: HomeComponent,
     title: 'Marketplace',
     canActivate: [roleGuard],
-    data: { blockedRoles: ['BusinessManager'] }, //  block only BusinessManager
+    data: { blockedRoles: ['BusinessManager'] },
   },
   {
     path: 'product',
     component: SingleProductComponent,
     title: 'product',
     canActivate: [roleGuard],
-    data: { blockedRoles: ['BusinessManager'] }, //  block only BusinessManager
+    data: { blockedRoles: ['BusinessManager'] },
   },
   {
     path: 'supplier',
@@ -77,5 +79,14 @@ export const routes: Routes = [
     component: ProfileComponent,
     title: 'Profile',
   },
-
+  {
+    path: 'basket',
+    component: BasketComponent,
+    title: 'basket',
+  },
+  {
+    path: 'checkout',
+    component: CheckoutComponent,
+    title: 'checkout'
+  }
 ];

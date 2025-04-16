@@ -5,20 +5,50 @@ import { jwtDecode } from 'jwt-decode';
 import { UserRole } from '../types/UserRole';
 import { IAddress } from '../models/address';
 import { environment } from '../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { map, of, ReplaySubject } from 'rxjs';
+import { Router } from '@angular/router';
+import { IUser } from '../models/user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   baseUrl = environment.apiUrl;
+  private currentUserSource = new ReplaySubject<any>(1);
+  currentUser$ = this.currentUserSource.asObservable();
 
   private readonly cookieService = inject(CookieService);
   private readonly http = inject(HttpClient);
 
-  constructor() {}
+  constructor(private router: Router) {}
   isAuthenticated(): boolean {
     return true;
+  }
+
+  loadCurrentUser(token: string) {
+    if (token == null) {
+      this.currentUserSource.next(null);
+      return of(null);
+    }
+
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', `Bearer ${token}`);
+
+    return this.http.get(this.baseUrl + 'account', {headers}).pipe(
+      map((user: any) => {
+        if (user) {
+          localStorage.setItem('token', user.token);
+          this.currentUserSource.next(user);
+        }
+      })
+    )
+  }
+
+  logout() {
+    localStorage.removeItem('token');
+    this.currentUserSource.next(null);
+    this.router.navigateByUrl('/');
   }
 
   getToken(): string {

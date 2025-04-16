@@ -6,6 +6,8 @@ import { FormsModule } from '@angular/forms';
 import { Product } from '../../../core/types/UserRole';
 import { ApiBaseService } from '../../../core/services/ApiBase.service';
 import { ProductToReturnDto } from '../../../data/api/data-contracts';
+import { HttpClient } from '@angular/common/http';
+import { ShopService } from './shop.service';
 
 @Component({
   selector: 'app-home-detail',
@@ -16,16 +18,25 @@ import { ProductToReturnDto } from '../../../data/api/data-contracts';
 export class HomeDetailComponent implements OnInit {
   products: ProductToReturnDto[] = [];
 
+  private readonly http!: HttpClient;
+  totalCount!: number;
+
   private readonly baseService!: ApiBaseService;
   async ngOnInit() {
     await this.getProducts();
   }
 
+  constructor(private shopService: ShopService) {}
+
   view: 'grid' | 'list' = 'grid';
 
-  async getProducts() {
-    let res = await this.baseService.apiClient.productList();
-    this.products = res.data.data!;
+  async getProducts(useCache?: false) {
+    this.shopService.getProducts(useCache!).subscribe(response => {
+      this.products = response.data;
+      this.totalCount = response.count;
+    }, error => {
+      console.log(error);
+    })
   }
 
   setView(view: 'grid' | 'list') {

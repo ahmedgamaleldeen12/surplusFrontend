@@ -1,20 +1,20 @@
 <div class="product-card">
-  <img class="product-image" src="{{product().image}}" width="295" height="285" />
+  <img class="product-image" src="{{product.image}}" width="295" height="285" />
 
   <div class="details">
     <div class="top-row">
-      <span class="brand">{{ product().brand }}</span>
-      <span class="sku">SKU: {{ product().sku }}</span>
+      <span class="brand">{{ product.brand }}</span>
+      <span class="sku">SKU: {{ product.sku }}</span>
     </div>
-    <h3 class="title">{{ product().title }}</h3>
+    <h3 class="title">{{ product.title }}</h3>
     <p class="specs">
-      {{ product().specs }}
+      {{ product.specs }}
     </p>
 
     <div class="price">1,140 <span class="currency">SAR</span></div>
 
     <div class="actions">
-      <button class="add-to-cart">
+      <button (click)="addItemToBasket()" class="add-to-cart">
         <i class="pi pi-cart-plus"></i> Add To Cart
       </button>
       <button class="wishlist">

@@ -23,7 +23,6 @@ export class ShopService {
   constructor(private http: HttpClient) {}
 
   getProducts(useCache: boolean) {
-    // debugger;
     if (useCache === false) {
       this.productCache = new Map();
     }
@@ -91,30 +90,34 @@ export class ShopService {
       return of(product);
     }
 
-    return this.http.get<IProduct>(this.baseUrl + 'product/' + id);
+    return this.http.get<IProduct>(this.baseUrl + 'api/' + 'product/' + id);
   }
 
   getBrands() {
     if (this.brands.length > 0) {
       return of(this.brands);
     }
-    return this.http.get<IBrand[]>(this.baseUrl + 'product/brands').pipe(
-      map((response) => {
-        this.brands = response;
-        return response;
-      }),
-    );
+    return this.http
+      .get<IBrand[]>(this.baseUrl + 'api/' + 'product/brands')
+      .pipe(
+        map((response) => {
+          this.brands = response;
+          return response;
+        }),
+      );
   }
 
   getTypes() {
     if (this.types.length > 0) {
       return of(this.types);
     }
-    return this.http.get<IType[]>(this.baseUrl + 'product/categories').pipe(
-      map((response) => {
-        this.types = response;
-        return response;
-      }),
-    );
+    return this.http
+      .get<IType[]>(this.baseUrl + 'api/' + 'product/categories')
+      .pipe(
+        map((response) => {
+          this.types = response;
+          return response;
+        }),
+      );
   }
 }

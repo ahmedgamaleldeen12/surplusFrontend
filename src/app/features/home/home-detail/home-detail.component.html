@@ -1,7 +1,12 @@
 <div class="container">
   <div class="search-filter">
     <div class="search-bar">
-      <input type="text" placeholder="Search Products" />
+      <input
+        (keyup)="onSearch()"
+        type="text"
+        placeholder="Search Products"
+        #search
+      />
       <img class="search-icon" src="./assets/icons/search-icon.svg" alt="" />
     </div>
 
@@ -37,7 +42,7 @@
       <div class="side-container">
         <div class="filter-header">
           <h3>Filter</h3>
-          <a href="#">Reset</a>
+          <a (click)="onReset()">Reset</a>
         </div>
 
         <div class="filter-section">
@@ -45,10 +50,33 @@
             <h4>Brands</h4>
           </div>
           <div class="categories">
-            <label><input type="checkbox" /> Category1</label>
-            <label><input type="checkbox" /> Category1</label>
-            <label><input type="checkbox" /> Category1</label>
-            <label><input type="checkbox" checked /> Category1</label>
+            @for (item of brands; track item.id) {
+              <label
+                ><input
+                  [checked]="shopParams.brandId === item.id"
+                  (change)="onBrandSelected(item.id)"
+                  type="checkbox"
+                />
+                {{ item.name }}</label
+              >
+            }
+          </div>
+        </div>
+        <div class="filter-section">
+          <div class="subtitle">
+            <h4>Categories</h4>
+          </div>
+          <div class="categories">
+            @for (item of types; track item.id) {
+              <label
+                ><input
+                  [checked]="shopParams.typeId === item.id"
+                  (change)="onTypeSelected(item.id)"
+                  type="checkbox"
+                />
+                {{ item.name }}</label
+              >
+            }
           </div>
         </div>
 
@@ -70,12 +98,14 @@
           </div>
         </div>
       </div>
-
     </aside>
 
     <div class="products-grid" [ngClass]="view">
-      <app-product-item *ngFor="let product of products" [product]="product"></app-product-item>
+      <app-product-item
+        *ngFor="let product of products"
+        [product]="product"
+      ></app-product-item>
     </div>
-
   </div>
 </div>
+<app-custom-paginator></app-custom-paginator>

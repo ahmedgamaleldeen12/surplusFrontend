@@ -1,0 +1,25 @@
+<div class="">
+  <p-paginator
+    (onPageChange)="onPageIndexChange($event)"
+    [rows]="per_page"
+    [first]="(page - 1) * per_page"
+    [showFirstLastIcon]="false"
+    [totalRecords]="total"
+    [showCurrentPageReport]="false"
+    [pageLinkSize]="4"
+  ></p-paginator>
+
+  <div class="">
+    <p-dropdown
+      styleClass="pagination-dropdown"
+      [appendTo]="'body'"
+      class=""
+      [options]="itemsPerPageOptions"
+      [ngModel]="per_page"
+      (onChange)="onItemsPerPageChanged($event)"
+    ></p-dropdown>
+    <span class="">
+      Showing 1 - {{ calculateDisplayedItems() }} of {{ total }}
+    </span>
+  </div>
+</div>

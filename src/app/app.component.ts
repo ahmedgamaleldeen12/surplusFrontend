@@ -21,6 +21,7 @@ export class AppComponent {
     this.loadBasket();
     // this.loadCurrentUser();
     document.getElementsByTagName('body')[0].classList.add('blue-theme');
+    this.loadBasket();
   }
 
   // loadCurrentUser() {

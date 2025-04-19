@@ -3,24 +3,23 @@
 
   <div class="details">
     <div class="top-row">
-      <span class="brand">{{ product.brand }}</span>
-      <span class="sku">SKU: {{ product.sku }}</span>
+      <span class="brand">{{ product.category }}</span>
+      <!-- <span class="sku">{{product.category}}</span> -->
     </div>
-    <h3 class="title">{{ product.title }}</h3>
+    <h3 class="title">{{ product.name }}</h3>
     <p class="specs">
-      {{ product.specs }}
+      {{ product.description }}
     </p>
 
-    <div class="price">1,140 <span class="currency">SAR</span></div>
+    <div class="price">{{product.price}} <span class="currency">SAR</span></div>
 
     <div class="actions">
       <button (click)="addItemToBasket()" class="add-to-cart">
         <i class="pi pi-cart-plus"></i> Add To Cart
       </button>
-      <button class="wishlist">
+      <!-- <button class="wishlist">
         <i class="pi pi-heart icon-heart"></i>
-      </button>
+      </button> -->
     </div>
   </div>
 </div>
-

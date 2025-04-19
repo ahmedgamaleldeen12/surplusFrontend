@@ -68,10 +68,10 @@ export class AuthService {
       return null;
     }
   }
-  setTempAuthRole(role: UserRole):void {
-    this.cookieService.set(CookiesConstants.tempAuthRole, role)
+  setTempAuthRole(role: UserRole): void {
+    this.cookieService.set(CookiesConstants.tempAuthRole, role);
   }
-  getTempAuthRole():UserRole{
+  getTempAuthRole(): UserRole {
     const role = this.cookieService.get(CookiesConstants.tempAuthRole);
     return (role as UserRole) || 'User';
   }
@@ -93,5 +93,10 @@ export class AuthService {
 
   updateUserAddress(address: IAddress) {
     return this.http.put<IAddress>(this.baseUrl + 'account/address', address);
+  }
+  getUserName(): string {
+    const token = this.cookieService.get(CookiesConstants.authUserToken);
+    const decoded: any = jwtDecode(token);
+    return decoded.given_name ?? '';
   }
 }

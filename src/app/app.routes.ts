@@ -7,7 +7,6 @@ import { roleGuard } from './core/guards/role.guard';
 import { VerifyCodeComponent } from './features/auth/verify-code/verify-code.component';
 import { ForgetPasswordComponent } from './features/auth/forget-password/forget-password.component';
 import { ChangePasswordComponent } from './features/auth/change-password/change-password.component';
-import { SingleProductComponent } from './features/single-product/single-product.component';
 import { BusinessHomeComponent } from './features/business-home/business-home.component';
 import { ProfileComponent } from './features/profile/profile.component';
 import { BasketComponent } from './features/basket/basket/basket.component';

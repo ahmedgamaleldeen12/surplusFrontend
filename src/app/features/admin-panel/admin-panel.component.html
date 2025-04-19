@@ -2,11 +2,9 @@
   <div class="logo">
     <img src="assets/images/Nubiq-Logo.svg" alt="Nubiq" />
   </div>
-  <div class="nav-text"  style="cursor: pointer;">
+  <div class="nav-text" style="cursor: pointer">
     <img src="./assets/icons/bag.svg" alt="" />
-    <p>
-      <span>Hello, Admin ,</span> You are admin of Surplus.
-    </p>
+    <p><span>Hello, Admin ,</span> You are admin of Surplus.</p>
   </div>
 </header>
 
@@ -19,7 +17,8 @@
     [showCurrentPageReport]="true"
     [tableStyle]="{ 'min-width': '60rem' }"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-    [rowsPerPageOptions]="[5, 10, 20, 50]">
+    [rowsPerPageOptions]="[5, 10, 20, 50]"
+  >
     <ng-template pTemplate="header">
       <tr>
         <th>Date</th>
@@ -28,13 +27,15 @@
         <th>Price</th>
         <th>Status</th>
         <th>Quantity</th>
+        <th>Accept</th>
+        <th>Refuse</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-listing>
       <tr>
-        <td>{{ listing.date  | date: 'medium'}}</td>
+        <td>{{ listing.date | date: "medium" }}</td>
         <td>{{ listing.name }}</td>
-        <td>{{ getCategoryLabel(listing.categoryId)}}</td>
+        <td>{{ getCategoryLabel(listing.categoryId) }}</td>
         <td>{{ listing.price }}</td>
         <td>
           <span
@@ -45,7 +46,38 @@
           </span>
         </td>
         <td>{{ listing.quantity }}</td>
+        <td>
+          <div
+            (click)="accept(listing.id)"
+            style="width: 100%;display: flex;
+justify-content: center; align-items: center;cursor: pointer;
+            "
+          >
+            <i
+              style="color: #43a047; font-size: 1.5rem"
+              class="pi pi-check-square"
+            ></i>
+          </div>
+        </td>
+        <td>
+          <div
+            (click)="reject(listing.id)"
+            style="
+              width: 100%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              cursor: pointer;
+            "
+          >
+            <i
+              style="color: #cd5c5c; font-size: 1.5rem"
+              class="pi pi-trash"
+            ></i>
+          </div>
+        </td>
       </tr>
     </ng-template>
   </p-table>
 </div>
+<p-toast></p-toast>

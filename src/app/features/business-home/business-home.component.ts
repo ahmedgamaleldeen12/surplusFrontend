@@ -13,6 +13,10 @@ import { Select } from 'primeng/select';
 import { FloatLabel } from 'primeng/floatlabel';
 import { ShopService } from '../home/home-detail/shop.service';
 import { IType } from '../../core/models/productType';
+import { BusinessService } from './Business.service';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-business-home',
   templateUrl: './business-home.component.html',
@@ -24,9 +28,15 @@ import { IType } from '../../core/models/productType';
     FloatLabel,
     FormsModule,
     ReactiveFormsModule,
+    ToastModule,
+    CommonModule
   ],
+  providers: [MessageService],
 })
 export class BusinessHomeComponent implements OnInit {
+naviagte() {
+throw new Error('Method not implemented.');
+}
   listings: Listing[] = [
     {
       date: '11/11/2022',
@@ -80,6 +90,8 @@ export class BusinessHomeComponent implements OnInit {
 
   private readonly authService = inject(AuthService);
   private readonly shopService = inject(ShopService);
+  private readonly businessService = inject(BusinessService);
+  private readonly messageService = inject(MessageService);
 
   private readonly fb = inject(FormBuilder);
   userName!: string;
@@ -100,6 +112,7 @@ export class BusinessHomeComponent implements OnInit {
       price: [null, Validators.required],
       quantity: [null, Validators.required],
       categoryId: [null, Validators.required],
+      picture: [this.selectedFile, Validators.required],
     });
   }
 
@@ -113,9 +126,61 @@ export class BusinessHomeComponent implements OnInit {
       },
     );
   }
-  addNewProduct(){
-    console.log(this.productForm.value);
+  addNewProduct() {
+    const formData = new FormData();
+    const formValue = this.productForm.value;
+    formData.append('name', formValue.name);
+    formData.append('description', formValue.description);
+    formData.append('price', formValue.price);
+    formData.append('quantity', formValue.quantity);
+    formData.append('categoryId', formValue.categoryId);
+    formData.append('picture', formValue.picture);
+    this.businessService.addProduct(formData).subscribe((res) => {
+      if (res) {
+        this.productForm.reset();
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'You successfully add a product order.',
+        });
+      }
+    });
+  }
+  selectedFile!: File | null;
 
+  uploadSuccess = false;
+imagePreviewUrl: string | null = null;
+
+onFileSelected(event: Event) {
+  const input = event.target as HTMLInputElement;
+  if (input.files && input.files.length > 0) {
+    const file = input.files[0];
+    this.productForm.patchValue({ picture: file });
+    this.productForm.get('picture')?.updateValueAndValidity();
+    this.uploadSuccess = true;
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imagePreviewUrl = reader.result as string;
+    };
+    reader.readAsDataURL(file);
+
+    setTimeout(() => {
+      this.uploadSuccess = false;
+    }, 2000);
+  }
+}
+
+  onFileDrop(event: DragEvent) {
+    event.preventDefault();
+    if (event.dataTransfer?.files && event.dataTransfer.files.length > 0) {
+      const file = event.dataTransfer.files[0];
+      this.selectedFile = file;
+      this.productForm.patchValue({ picture: file });
+      this.productForm.get('picture')?.updateValueAndValidity();
+    }
+  }
+  onDragOver(event: DragEvent) {
+    event.preventDefault();
   }
 }
 

@@ -7,9 +7,9 @@ import { roleGuard } from './core/guards/role.guard';
 import { VerifyCodeComponent } from './features/auth/verify-code/verify-code.component';
 import { ForgetPasswordComponent } from './features/auth/forget-password/forget-password.component';
 import { ChangePasswordComponent } from './features/auth/change-password/change-password.component';
-import { SingleProductComponent } from './features/single-product/single-product.component';
 import { BusinessHomeComponent } from './features/business-home/business-home.component';
 import { ProfileComponent } from './features/profile/profile.component';
+import { BasketComponent } from './features/basket/basket/basket.component';
 
 export const routes: Routes = [
   {
@@ -61,13 +61,6 @@ export const routes: Routes = [
     data: { blockedRoles: ['BusinessManager'] }, //  block only BusinessManager
   },
   {
-    path: 'product',
-    component: SingleProductComponent,
-    title: 'product',
-    canActivate: [roleGuard],
-    data: { blockedRoles: ['BusinessManager'] }, //  block only BusinessManager
-  },
-  {
     path: 'supplier',
     component: BusinessHomeComponent,
     title: 'supplier home',
@@ -76,6 +69,11 @@ export const routes: Routes = [
     path: 'profile',
     component: ProfileComponent,
     title: 'Profile',
+  },
+  {
+    path: 'basket',
+    component: BasketComponent,
+    title: 'basket',
   },
 
 ];

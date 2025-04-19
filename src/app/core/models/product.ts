@@ -5,5 +5,5 @@ export interface IProduct {
     price: number;
     pictureUrl: string;
     category: string;
-    brand: string;
+    // brand: string;
 }

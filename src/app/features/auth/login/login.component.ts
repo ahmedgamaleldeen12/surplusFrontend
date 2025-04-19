@@ -16,7 +16,7 @@ import { CookiesConstants } from '../../../core/constants/CookiesConstants';
 import { Router } from '@angular/router';
 import { UserRole } from '../../../core/types/UserRole';
 import { AuthService } from '../../../core/services/Auth.service';
-import { TabsComponent } from "../tabs/tabs.component";
+import { TabsComponent } from '../tabs/tabs.component';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 
@@ -32,7 +32,7 @@ import { ToastModule } from 'primeng/toast';
     FormsModule,
     NgClass,
     TabsComponent,
-    ToastModule
+    ToastModule,
   ],
   providers: [MessageService],
 })
@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit {
     return this.loginForm.get('password');
   }
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
     this.initForm();
@@ -98,17 +98,19 @@ export class LoginComponent implements OnInit {
           false,
           'Lax',
         );
-        if(this.authService.getTempAuthRole() == 'User'){
+        if (this.authService.getTempAuthRole() == 'User') {
           this.router.navigate(['./marketplace']);
-        }else{
-          // this.router.navigate(['./marketplace']);
+        } else if (this.authService.getTempAuthRole() == 'BusinessManager') {
+          this.router.navigate(['./supplier']);
+        } else if (this.authService.getTempAuthRole() == 'Admin') {
+          // this.router.navigate(['./supplier']);
         }
       }
     } catch (err) {
       this.messageService.add({
         severity: 'error',
         summary: 'Verification Failed',
-        detail: 'The code is incorrect or expired.'
+        detail: 'The code is incorrect or expired.',
       });
     } finally {
       this.isRequestFired = false;

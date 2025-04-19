@@ -1,6 +1,5 @@
-import { Product } from './../../../core/types/UserRole';
 import { CommonModule } from '@angular/common';
-import { Component, inject, input, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { BasketService } from '../../basket/basket.service';
 import { IProduct } from '../../../core/models/product';
 
@@ -13,10 +12,8 @@ import { IProduct } from '../../../core/models/product';
 export class ProductItemComponent {
   @Input() product!: any;
 
-  private basketService = inject(BasketService);
+  private readonly basketService = inject(BasketService);
   addItemToBasket() {
-    debugger
-    console.log(this.product);
     this.basketService.addItemToBasket(this.product);
   }
 }

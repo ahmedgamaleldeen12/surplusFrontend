@@ -4,10 +4,11 @@ import { IDeliveryMethod } from '../../../core/models/deliveryMethod';
 import { BasketService } from '../../basket/basket.service';
 import { CheckoutService } from '../checkout.service';
 import { CommonModule } from '@angular/common';
+import { CdkStepperModule } from '@angular/cdk/stepper';
 
 @Component({
   selector: 'app-checkout-delivery',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, CdkStepperModule],
   templateUrl: './checkout-delivery.component.html',
   styleUrl: './checkout-delivery.component.scss'
 })

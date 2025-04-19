@@ -46,13 +46,14 @@ export class BasketService {
   }
 
   getBasket(id: string) {
-    return this.http.get(this.baseUrl + 'api/' + 'basket?id=' + id).pipe(
-      map((basket: any) => {
-        this.basketSource.next(basket);
-        this.shipping = basket.shippingPrice;
-        this.calculateTotals();
-      }),
-    );
+    return this.http.get(this.baseUrl + 'api/' + 'basket?id=' + id)
+      .pipe(
+        map((basket: any) => {
+          this.basketSource.next(basket);
+          this.shipping = basket.shippingPrice;
+          this.calculateTotals();
+        })
+      )
   }
 
   setBasket(basket: IBasket) {

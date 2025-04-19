@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { IAddress } from '../../../core/models/address';
@@ -10,25 +10,56 @@ import { CdkStepperModule } from '@angular/cdk/stepper';
 
 @Component({
   selector: 'app-checkout-address',
-  imports: [TextInputComponent, CommonModule, ReactiveFormsModule, RouterLink, CdkStepperModule],
+  standalone: true,
+  imports: [
+    TextInputComponent,
+    CommonModule,
+    ReactiveFormsModule,
+    RouterLink,
+    CdkStepperModule
+  ],
   templateUrl: './checkout-address.component.html',
   styleUrl: './checkout-address.component.scss'
 })
-export class CheckoutAddressComponent {
+export class CheckoutAddressComponent implements OnInit {
   @Input() checkoutForm!: FormGroup;
+  loading = false;
 
-  constructor(private accountService: AuthService, private toastr: ToastrService) { }
+  constructor(
+    private accountService: AuthService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
+    if (!this.checkoutForm?.get('addressForm')) {
+      console.warn('Address form not initialized.');
+    }
   }
 
-  saveUserAddress() {
-    this.accountService.updateUserAddress(this.checkoutForm.get('addressForm')!.value).subscribe((address: IAddress) => {
-      this.toastr.success('Address saved');
-      this.checkoutForm.get('addressForm')!.reset(address);
-    }, error => {
-      this.toastr.error(error.message);
-      console.log(error);
-    })
+  saveUserAddress(): void {
+    const addressForm = this.checkoutForm.get('addressForm');
+    if (!addressForm?.valid) {
+      this.toastr.warning('Please complete all required address fields.');
+      return;
+    }
+
+    this.loading = true;
+
+    debugger
+    console.log('addressForm.value', addressForm.value);
+
+    this.accountService.updateUserAddress(addressForm.value as IAddress)
+      .subscribe({
+        next: (address: IAddress) => {
+          this.toastr.success('Address saved');
+          addressForm.reset(address);
+          this.loading = false;
+        },
+        error: (error) => {
+          this.toastr.error(error?.message || 'Failed to save address');
+          console.error('Address update error:', error);
+          this.loading = false;
+        }
+      });
   }
 }

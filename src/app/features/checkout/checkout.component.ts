@@ -36,7 +36,7 @@ export class CheckoutComponent {
     this.checkoutForm = this.fb.group({
       addressForm: this.fb.group({
         firstName: [null, Validators.required],
-        lastName: [null, Validators.required],
+        // lastName: [null, Validators.required],
         street: [null, Validators.required],
         city: [null, Validators.required],
         country: [null, Validators.required],

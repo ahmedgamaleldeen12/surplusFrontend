@@ -25,7 +25,7 @@ export class OrdersDetailedComponent {
   }
 
   ngOnInit(): void {
-    debugger;
+    // debugger;
     console.log(+this.route.snapshot.paramMap.get('id')!);
     this.orderService
       .getOrderDetailed(+this.route.snapshot.paramMap.get('id')!)

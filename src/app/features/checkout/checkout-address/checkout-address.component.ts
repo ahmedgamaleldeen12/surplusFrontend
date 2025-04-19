@@ -45,7 +45,7 @@ export class CheckoutAddressComponent implements OnInit {
 
     this.loading = true;
 
-    debugger
+    // debugger
     console.log('addressForm.value', addressForm.value);
 
     this.accountService.updateUserAddress(addressForm.value as IAddress)

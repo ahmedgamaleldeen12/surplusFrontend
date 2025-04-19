@@ -99,4 +99,9 @@ export class AuthService {
     const decoded: any = jwtDecode(token);
     return decoded.given_name ?? '';
   }
+  getUserId(): string {
+    const token = this.cookieService.get(CookiesConstants.authUserToken);
+    const decoded: any = jwtDecode(token);
+    return decoded.nameid ?? '';
+  }
 }

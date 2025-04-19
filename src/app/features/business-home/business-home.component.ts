@@ -2,13 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FooterComponent } from '../home/footer/footer.component';
 import { TableModule } from 'primeng/table';
 import { AuthService } from '../../core/services/Auth.service';
-import {
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import {FormBuilder,FormGroup,FormsModule,ReactiveFormsModule,Validators} from '@angular/forms';
 import { Select } from 'primeng/select';
 import { FloatLabel } from 'primeng/floatlabel';
 import { ShopService } from '../home/home-detail/shop.service';
@@ -16,7 +10,9 @@ import { IType } from '../../core/models/productType';
 import { BusinessService } from './Business.service';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-business-home',
   templateUrl: './business-home.component.html',
@@ -29,71 +25,20 @@ import { CommonModule } from '@angular/common';
     FormsModule,
     ReactiveFormsModule,
     ToastModule,
-    CommonModule
+    CommonModule,
   ],
-  providers: [MessageService],
+  providers: [MessageService, DatePipe],
 })
 export class BusinessHomeComponent implements OnInit {
-naviagte() {
-throw new Error('Method not implemented.');
-}
-  listings: Listing[] = [
-    {
-      date: '11/11/2022',
-      name: 'Fire&Blood',
-      brandName: 'George R.R Martin',
-      price: 3456,
-      status: 'Accepted',
-      quantity: 3456,
-    },
-    {
-      date: '22/10/2022',
-      name: 'Bridge of clay',
-      brandName: 'Markus Suzak',
-      price: 2800,
-      status: 'Declined',
-      quantity: 3456,
-    },
-    {
-      date: '22/05/2022',
-      name: 'Do Epic Shit',
-      brandName: 'Ankur Warikoo',
-      price: 120,
-      status: 'Pending',
-      quantity: 3456,
-    },
-    {
-      date: '14/07/2020',
-      name: "My Sister's Keeper",
-      brandName: 'Jodi Picoult',
-      price: 15,
-      status: 'Pending',
-      quantity: 3456,
-    },
-    {
-      date: '12/04/2021',
-      name: 'Atomic Habits',
-      brandName: 'James Clear',
-      price: 33983,
-      status: 'Accepted',
-      quantity: 3456,
-    },
-    {
-      date: '02/02/2022',
-      name: 'Dune',
-      brandName: 'Frank Herbert',
-      price: 11832,
-      status: 'Declined',
-      quantity: 3456,
-    },
-  ];
+  listings: ProductToReturnDto[] = [];
 
   private readonly authService = inject(AuthService);
   private readonly shopService = inject(ShopService);
   private readonly businessService = inject(BusinessService);
   private readonly messageService = inject(MessageService);
-
+  private readonly router = inject(Router);
   private readonly fb = inject(FormBuilder);
+
   userName!: string;
   productForm!: FormGroup;
   categoryId!: number;
@@ -104,6 +49,7 @@ throw new Error('Method not implemented.');
     this.initForm();
     this.userName = this.authService.getUserName();
     await this.getTypes();
+    await this.getpreviosOrders();
   }
   initForm() {
     this.productForm = this.fb.group({
@@ -135,40 +81,44 @@ throw new Error('Method not implemented.');
     formData.append('quantity', formValue.quantity);
     formData.append('categoryId', formValue.categoryId);
     formData.append('picture', formValue.picture);
+    formData.append('userId', this.authService.getUserId());
+
     this.businessService.addProduct(formData).subscribe((res) => {
       if (res) {
         this.productForm.reset();
+        this.imagePreviewUrl = null;
         this.messageService.add({
           severity: 'success',
           summary: 'Success',
           detail: 'You successfully add a product order.',
         });
+        this.ngOnInit();
       }
     });
   }
   selectedFile!: File | null;
 
   uploadSuccess = false;
-imagePreviewUrl: string | null = null;
+  imagePreviewUrl: string | null = null;
 
-onFileSelected(event: Event) {
-  const input = event.target as HTMLInputElement;
-  if (input.files && input.files.length > 0) {
-    const file = input.files[0];
-    this.productForm.patchValue({ picture: file });
-    this.productForm.get('picture')?.updateValueAndValidity();
-    this.uploadSuccess = true;
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.imagePreviewUrl = reader.result as string;
-    };
-    reader.readAsDataURL(file);
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      this.productForm.patchValue({ picture: file });
+      this.productForm.get('picture')?.updateValueAndValidity();
+      this.uploadSuccess = true;
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreviewUrl = reader.result as string;
+      };
+      reader.readAsDataURL(file);
 
-    setTimeout(() => {
-      this.uploadSuccess = false;
-    }, 2000);
+      setTimeout(() => {
+        this.uploadSuccess = false;
+      }, 2000);
+    }
   }
-}
 
   onFileDrop(event: DragEvent) {
     event.preventDefault();
@@ -182,13 +132,42 @@ onFileSelected(event: Event) {
   onDragOver(event: DragEvent) {
     event.preventDefault();
   }
+  naviagte() {
+    this.router.navigate(['./profile']);
+  }
+  async getpreviosOrders() {
+    await this.businessService.getPagedProducts().subscribe((res) => {
+      this.listings = res;
+    });
+  }
+  productStatusMap = {
+    [ProductStatus.Pending]: 'Pending',
+    [ProductStatus.Accepted]: 'Accepted',
+    [ProductStatus.Declined]: 'Declined',
+  };
+  getStatusLabel(status: ProductStatus): string {
+    return this.productStatusMap[status] || 'Unknown';
+  }
+  getCategoryLabel(id:number){
+    return this.categories.find(c=> c.id == id)?.name
+  }
 }
 
-export interface Listing {
-  date: string;
+export interface ProductToReturnDto {
+  id: number;
   name: string;
-  brandName: string;
+  description: string;
+  pictureUrl: string;
   price: number;
-  status: string;
+  date: string;
   quantity: number;
+  categoryId: number;
+  category: string;
+  status: ProductStatus;
+}
+
+export enum ProductStatus {
+  Pending = 0,
+  Accepted = 1,
+  Declined = 2,
 }

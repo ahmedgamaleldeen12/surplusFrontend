@@ -1,0 +1,51 @@
+<header class="header">
+  <div class="logo">
+    <img src="assets/images/Nubiq-Logo.svg" alt="Nubiq" />
+  </div>
+  <div class="nav-text"  style="cursor: pointer;">
+    <img src="./assets/icons/bag.svg" alt="" />
+    <p>
+      <span>Hello, Admin ,</span> You are admin of Surplus.
+    </p>
+  </div>
+</header>
+
+<div class="card">
+  <h1>Business Supplier Orders</h1>
+  <p-table
+    [value]="listings"
+    [paginator]="false"
+    [rows]="5"
+    [showCurrentPageReport]="true"
+    [tableStyle]="{ 'min-width': '60rem' }"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [rowsPerPageOptions]="[5, 10, 20, 50]">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Date</th>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Price</th>
+        <th>Status</th>
+        <th>Quantity</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-listing>
+      <tr>
+        <td>{{ listing.date  | date: 'medium'}}</td>
+        <td>{{ listing.name }}</td>
+        <td>{{ getCategoryLabel(listing.categoryId)}}</td>
+        <td>{{ listing.price }}</td>
+        <td>
+          <span
+            class="status-badge"
+            [class]="'status-' + getStatusLabel(listing.status).toLowerCase()"
+          >
+            {{ getStatusLabel(listing.status) }}
+          </span>
+        </td>
+        <td>{{ listing.quantity }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

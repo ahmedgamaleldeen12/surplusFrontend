@@ -20,7 +20,7 @@ export class ProfileService {
     return this.http.post(`${this.baseUrl}api/Account/upload-profile-image`, formData)
   }
   updateProfile(data : User){
-    debugger
+    // debugger
     return this.http.put(`${this.baseUrl}api/Account/profile`, data)
   }
 }

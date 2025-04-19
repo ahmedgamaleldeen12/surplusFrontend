@@ -77,7 +77,7 @@ export class ChangePasswordComponent implements OnInit {
       CurrentPassword: this.changePasswordForm.get('CurrentPassword')?.value,
     };
 
-    debugger
+    // debugger
 
     try {
       const res = await this.apiBaseService.apiClient.accountResetPasswordUpdate(data);

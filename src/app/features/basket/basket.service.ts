@@ -170,7 +170,7 @@ export class BasketService {
       price: item.price,
       pictureUrl: item.pictureUrl,
       quantity,
-      brand: item.brand,
+      // brand: item.brand,
       category: item.category,
     };
   }

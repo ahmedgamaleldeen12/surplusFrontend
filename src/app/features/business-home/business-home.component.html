@@ -4,29 +4,31 @@
   </div>
   <div class="nav-text">
     <img src="./assets/icons/bag.svg" alt="" />
-    <p><span>Hello, Ahmed ,</span>you are logged in as a supplier.</p>
+    <p>
+      <span>Hello, {{ this.userName }} ,</span>you are logged in as a supplier.
+    </p>
   </div>
 </header>
 
 <div class="container">
   <h2>Add new listings</h2>
-
+<form [formGroup]="productForm" (submit)="addNewProduct()">
   <div class="form-group">
     <div class="input-group">
       <label>Product Name</label>
-      <input type="text" placeholder="enter product name" />
+      <input type="text" formControlName="name" placeholder="enter product name" />
     </div>
 
     <div class="input-group currency">
       <label>Price</label>
-      <input type="text" placeholder="enter product price" />
+      <input type="number" min="1" placeholder="enter product price" formControlName="price" />
     </div>
   </div>
 
   <div class="form-group">
     <div class="input-group">
-      <label>Brand Name</label>
-      <input type="text" placeholder="enter brand name" />
+      <label>Model Specifications</label>
+      <input type="text" formControlName="description" placeholder="enter description" />
     </div>
 
     <div class="input-group">
@@ -36,27 +38,29 @@
   </div>
 
   <div class="form-group">
-    <div class="input-group">
-      <label>Model Specifications</label>
-      <input type="text" placeholder="enter description" />
+    <div class="input-group" style="flex-direction: column-reverse;">
+      <p-floatlabel class="" variant="on">
+        <p-select
+          formControlName="categoryId"
+          inputId="on_label"
+          [options]="categories"
+          optionLabel="name"
+          optionValue="id"
+          styleClass="w-full"
+        />
+        <label for="on_label">Category</label>
+      </p-floatlabel>
     </div>
-
-    <div class="input-group">
-      <label>Category</label>
-      <input type="text" placeholder="enter product category" />
-    </div>
-  </div>
-
-  <div class="form-group">
     <div class="input-group">
       <label>Quantity</label>
-      <input type="text" placeholder="enter product quantity" />
+      <input formControlName="quantity" type="number" min="1" placeholder="enter product quantity" />
     </div>
   </div>
 
+
+
   <div class="upload-area">
-    <svg
-      class="icon"
+    <svg class="icon"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -70,8 +74,12 @@
     <div class="upload-subtext">to upload or drop photos here</div>
   </div>
 
-  <button class="submit-btn">Add New Listing</button>
+  <button type="submit" [disabled]="!productForm.valid" class="submit-btn">Add New Listing</button>
+</form>
 </div>
+
+
+
 
 
 
@@ -82,7 +90,7 @@
     [paginator]="true"
     [rows]="5"
     [showCurrentPageReport]="true"
-    [tableStyle]="{'min-width': '60rem'}"
+    [tableStyle]="{ 'min-width': '60rem' }"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
     [rowsPerPageOptions]="[5, 10, 20, 50]"
   >
@@ -98,16 +106,19 @@
     </ng-template>
     <ng-template pTemplate="body" let-listing>
       <tr>
-        <td>{{listing.date}}</td>
-        <td>{{listing.name}}</td>
-        <td>{{listing.brandName}}</td>
-        <td>{{listing.price}}</td>
+        <td>{{ listing.date }}</td>
+        <td>{{ listing.name }}</td>
+        <td>{{ listing.brandName }}</td>
+        <td>{{ listing.price }}</td>
         <td>
-          <span class="status-badge" [class]="'status-' + listing.status.toLowerCase()">
-            {{listing.status}}
+          <span
+            class="status-badge"
+            [class]="'status-' + listing.status.toLowerCase()"
+          >
+            {{ listing.status }}
           </span>
         </td>
-        <td>{{listing.quantity}}</td>
+        <td>{{ listing.quantity }}</td>
       </tr>
     </ng-template>
   </p-table>

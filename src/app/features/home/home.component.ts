@@ -1,5 +1,4 @@
-import { ApiBaseService } from './../../core/services/ApiBase.service';
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { HeaderComponent } from "./header/header.component";
 import { CarouselComponent } from "./carousel/carousel.component";
 import { HomeDetailComponent } from "./home-detail/home-detail.component";
@@ -13,10 +12,5 @@ import { CommonModule } from '@angular/common';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
-
-  private readonly _apiBaseService = inject(ApiBaseService);
-  async test(){
-    let res =  await this._apiBaseService.apiClient.productCategoriesList();
-  }
 
 }

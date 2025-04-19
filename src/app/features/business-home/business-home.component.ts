@@ -1,12 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FooterComponent } from '../home/footer/footer.component';
 import { TableModule } from 'primeng/table';
-
+import { AuthService } from '../../core/services/Auth.service';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { Select } from 'primeng/select';
+import { FloatLabel } from 'primeng/floatlabel';
+import { ShopService } from '../home/home-detail/shop.service';
+import { IType } from '../../core/models/productType';
 @Component({
   selector: 'app-business-home',
   templateUrl: './business-home.component.html',
   styleUrls: ['./business-home.component.scss'],
-  imports: [FooterComponent, TableModule],
+  imports: [
+    FooterComponent,
+    TableModule,
+    Select,
+    FloatLabel,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
 })
 export class BusinessHomeComponent implements OnInit {
   listings: Listing[] = [
@@ -60,10 +78,47 @@ export class BusinessHomeComponent implements OnInit {
     },
   ];
 
+  private readonly authService = inject(AuthService);
+  private readonly shopService = inject(ShopService);
+
+  private readonly fb = inject(FormBuilder);
+  userName!: string;
+  productForm!: FormGroup;
+  categoryId!: number;
+  categories: IType[] = [];
   constructor() {}
 
-  ngOnInit() {}
+  async ngOnInit() {
+    this.initForm();
+    this.userName = this.authService.getUserName();
+    await this.getTypes();
+  }
+  initForm() {
+    this.productForm = this.fb.group({
+      name: [null, Validators.required],
+      description: [null, Validators.required],
+      price: [null, Validators.required],
+      quantity: [null, Validators.required],
+      categoryId: [null, Validators.required],
+    });
+  }
+
+  getTypes() {
+    this.shopService.getTypes().subscribe(
+      (response) => {
+        this.categories = response;
+      },
+      (error) => {
+        console.log(error);
+      },
+    );
+  }
+  addNewProduct(){
+    console.log(this.productForm.value);
+
+  }
 }
+
 export interface Listing {
   date: string;
   name: string;

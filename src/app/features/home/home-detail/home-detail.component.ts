@@ -1,15 +1,20 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  inject,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { ProductItemComponent } from '../product-item/product-item.component';
 import { CommonModule } from '@angular/common';
 import { Slider } from 'primeng/slider';
 import { FormsModule } from '@angular/forms';
-import { Product } from '../../../core/types/UserRole';
-import { ProductToReturnDto } from '../../../data/api/data-contracts';
 import { ShopService } from './shop.service';
 import { IBrand } from '../../../core/models/brand';
 import { CustomPaginatorComponent } from '../../../shared/custom-paginator/custom-paginator.component';
 import { ShopParams } from '../../../core/models/shopParams';
 import { IType } from '../../../core/models/productType';
+import { IProduct } from '../../../core/models/product';
 
 @Component({
   selector: 'app-home-detail',
@@ -18,33 +23,30 @@ import { IType } from '../../../core/models/productType';
     ProductItemComponent,
     Slider,
     FormsModule,
-    CustomPaginatorComponent,
   ],
   templateUrl: './home-detail.component.html',
   styleUrl: './home-detail.component.scss',
 })
 export class HomeDetailComponent implements OnInit {
-  products: ProductToReturnDto[] = [];
+  products: IProduct[] = [];
   brands: IBrand[] = [];
   types: IType[] = [];
   totalCount!: number;
   shopParams: ShopParams;
   rangeValues: number[] = [665, 1120];
-  Products: Product[] = [];
   sortOptions = [
-    {name: 'Price: Low to high', value: 'priceAsc'},
-    {name: 'Price: High to low', value: 'priceDesc'},
-  ]
-  @ViewChild('search', {static: false}) searchTerm!: ElementRef;
-
-
+    { name: 'Price: Low to high', value: 'priceAsc' },
+    { name: 'Price: High to low', value: 'priceDesc' },
+  ];
+  @ViewChild('search', { static: false }) searchTerm!: ElementRef;
+  private readonly shopService = inject(ShopService);
   async ngOnInit() {
     await this.getProducts(true);
-    await this.getBrands();
+    // await this.getBrands();
     await this.getTypes();
   }
 
-  constructor(private shopService: ShopService) {
+  constructor() {
     this.shopParams = this.shopService.getShopParams();
   }
 
@@ -62,11 +64,14 @@ export class HomeDetailComponent implements OnInit {
     );
   }
   getBrands() {
-    this.shopService.getBrands().subscribe(response => {
-      this.brands = [{id: 0, name: 'All'}, ...response];
-    }, error => {
-      console.log(error);
-    })
+    this.shopService.getBrands().subscribe(
+      (response) => {
+        this.brands = [{ id: 0, name: 'All' }, ...response];
+      },
+      (error) => {
+        console.log(error);
+      },
+    );
   }
   setView(view: 'grid' | 'list') {
     this.view = view;
@@ -79,13 +84,15 @@ export class HomeDetailComponent implements OnInit {
     this.getProducts();
   }
 
-
   getTypes() {
-    this.shopService.getTypes().subscribe(response => {
-      this.types = [{id: 0, name: 'All'}, ...response];
-    }, error => {
-      console.log(error);
-    })
+    this.shopService.getTypes().subscribe(
+      (response) => {
+        this.types = [{ id: 0, name: 'All' }, ...response];
+      },
+      (error) => {
+        console.log(error);
+      },
+    );
   }
 
   onBrandSelected(brandId: number) {
@@ -120,14 +127,10 @@ export class HomeDetailComponent implements OnInit {
   //   }
   // }
 
-
-
   onReset() {
     this.searchTerm.nativeElement.value = '';
     this.shopParams = new ShopParams();
     this.shopService.setShopParams(this.shopParams);
     this.getProducts();
   }
-
-
 }

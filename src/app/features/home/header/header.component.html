@@ -15,10 +15,9 @@
     <button class="login" (click)="navigate('./auth/login', 'BusinessManager')">
       Login as Supplier
     </button>
-    <div class="cart">
+    <div class="cart" (click)="navigate('./basket')">
       <img src="./assets/icons/cart.svg" alt="cart icon" />
         <span *ngIf="basket$ | async as basket" class="badge">{{ basket.items.length}}</span>
-
     </div>
     <div class="wishlist">
       <img src="./assets/icons/wish-list.svg" alt="wish list icon" />

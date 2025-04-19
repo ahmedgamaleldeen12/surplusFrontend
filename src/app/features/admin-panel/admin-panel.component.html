@@ -28,6 +28,7 @@
         <th>Price</th>
         <th>Status</th>
         <th>Quantity</th>
+        <th>Accept</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-listing>
@@ -45,6 +46,8 @@
           </span>
         </td>
         <td>{{ listing.quantity }}</td>
+        <td>
+          <div style="width: 100%; display: flex; justify-content: center; align-items: center;"><i class="pi pi-check-square "></i></div></td>
       </tr>
     </ng-template>
   </p-table>

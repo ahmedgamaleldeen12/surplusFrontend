@@ -62,13 +62,6 @@ export const routes: Routes = [
     data: { blockedRoles: ['BusinessManager'] },
   },
   {
-    path: 'product',
-    component: SingleProductComponent,
-    title: 'product',
-    canActivate: [roleGuard],
-    data: { blockedRoles: ['BusinessManager'] },
-  },
-  {
     path: 'supplier',
     component: BusinessHomeComponent,
     title: 'supplier home',

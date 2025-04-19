@@ -34,7 +34,7 @@ export class AppComponent {
   // }
 
   loadBasket() {
-    debugger
+    // debugger
     const basketId = localStorage.getItem('basket_id');
     if (basketId) {
       this.basketService.getBasket(basketId).subscribe(

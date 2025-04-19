@@ -80,15 +80,16 @@ export class BasketService {
   }
 
   incrementItemQuantity(item: IBasketItem) {
+    // debugger;
     const basket = this.getCurrentBasketValue();
-    const foundItemIndex = basket.items.findIndex((x) => x.id === item.id);
+    const foundItemIndex = basket.items.findIndex((x) => x.productId === item.productId);
     basket.items[foundItemIndex].quantity++;
     this.setBasket(basket);
   }
 
   decrementItemQuantity(item: IBasketItem) {
     const basket = this.getCurrentBasketValue();
-    const foundItemIndex = basket.items.findIndex((x) => x.id === item.id);
+    const foundItemIndex = basket.items.findIndex((x) => x.productId === item.productId);
     if (basket.items[foundItemIndex].quantity > 1) {
       basket.items[foundItemIndex].quantity--;
       this.setBasket(basket);
@@ -99,8 +100,8 @@ export class BasketService {
 
   removeItemFromBasket(item: IBasketItem) {
     const basket = this.getCurrentBasketValue();
-    if (basket.items.some((x) => x.id === item.id)) {
-      basket.items = basket.items.filter((i) => i.id !== item.id);
+    if (basket.items.some((x) => x.productId === item.productId)) {
+      basket.items = basket.items.filter((i) => i.productId !== item.productId);
       if (basket.items.length > 0) {
         this.setBasket(basket);
       } else {
@@ -163,6 +164,7 @@ export class BasketService {
   ): IBasketItem {
     return {
       id: item.id,
+      productId: item.id,
       productName: item.name,
       price: item.price,
       pictureUrl: item.pictureUrl,

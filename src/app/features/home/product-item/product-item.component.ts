@@ -14,6 +14,7 @@ export class ProductItemComponent {
   private readonly basketService = inject(BasketService);
   
   addItemToBasket() {
+    // debugger;
     this.basketService.addItemToBasket(this.product);
   }
 }

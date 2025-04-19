@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, Input, ViewChild } from '@angular/core';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, NavigationExtras } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -8,14 +8,17 @@ import { CheckoutService } from '../checkout.service';
 import { CommonModule } from '@angular/common';
 import { TextInputComponent } from '../../../core/components/text-input/text-input.component';
 import { CdkStepperModule } from '@angular/cdk/stepper';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 
 declare var Stripe: any;
 
 @Component({
   selector: 'app-checkout-payment',
-  imports: [TextInputComponent, CommonModule, ReactiveFormsModule, CdkStepperModule , FormsModule],
+  imports: [TextInputComponent, CommonModule, ReactiveFormsModule, CdkStepperModule, ToastModule],
   templateUrl: './checkout-payment.component.html',
-  styleUrl: './checkout-payment.component.scss'
+  styleUrl: './checkout-payment.component.scss',
+  providers: [MessageService],
 })
 export class CheckoutPaymentComponent {
   @Input() checkoutForm!: FormGroup;
@@ -33,11 +36,13 @@ export class CheckoutPaymentComponent {
   cardExpiryValid = false;
   cardCvcValid = false;
 
+  private readonly messageService = inject(MessageService);
+
   constructor(private basketService: BasketService, private checkoutService: CheckoutService,
     private toastr: ToastrService, private router: Router) { }
 
   ngAfterViewInit(): void {
-    this.stripe = Stripe('pk_test_51PfZxWRu0oPqYBoqJ54FhbKYZBIEsyuvwRB5mGf6chdyRZ7Xs7A1TvUHUbWAoUQm4mVp5fpXpeweIj740pe88Q0500M1oNs5zH');
+    this.stripe = Stripe('pk_test_51R7GAqH8fwIrcqc8aXYgNf4yB9puIUkQyUgi8QfwxPKy4paxJ47OfeWX2lCQ3uelsQP3qgkxYo3N4S3E27g8xILf00d5KrKbue');
     const elements = this.stripe.elements();
 
     this.cardNumber = elements.create('cardNumber');
@@ -79,20 +84,25 @@ export class CheckoutPaymentComponent {
   }
 
   async submitOrder() {
-    debugger;
+    // debugger;
     this.loading = true;
     const basket = this.basketService.getCurrentBasketValue();
     try {
       const createdOrder = await this.createOrder(basket); // api
-      const paymentResult = await this.confirmPaymentWithStripe(basket);
-      if (paymentResult.paymentIntent) {
-        // if (true) {
-        this.basketService.deleteLocalBasket(basket.id);
-        const navigationExtras: NavigationExtras = { state: createdOrder };
-        this.router.navigate(['checkout/success'], navigationExtras);
-      } else {
-        this.toastr.error(paymentResult.error.message);
-      }
+      this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Order created' });
+      this.basketService.deleteLocalBasket(basket.id);
+      setTimeout(() => {
+        this.router.navigate(['/marketplace']);
+      }, 1000);
+      // const paymentResult = await this.confirmPaymentWithStripe(basket);
+      // if (paymentResult.paymentIntent) {
+      //   // if (true) {
+      //   this.basketService.deleteLocalBasket(basket.id);
+      //   const navigationExtras: NavigationExtras = { state: createdOrder };
+      //   this.router.navigate(['checkout/success'], navigationExtras);
+      // } else {
+      //   this.toastr.error(paymentResult.error.message);
+      // }
       this.loading = false;
     } catch (error) {
       console.log(error);
@@ -101,7 +111,7 @@ export class CheckoutPaymentComponent {
   }
 
   private async confirmPaymentWithStripe(basket: any) {
-    debugger
+    // debugger
     console.log(this.cardNumber)
     console.log(this.checkoutForm.get('paymentForm')!.get('nameOnCard')!.value)
 

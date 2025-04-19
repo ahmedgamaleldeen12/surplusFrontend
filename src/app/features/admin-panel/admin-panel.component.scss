@@ -79,11 +79,7 @@ h2 {
 .w-full {
   width: 100%;
 }
-:host ::ng-deep .p-select-label {
-  // padding: 8px 12px;
-  // border-radius: 4px !important;
-  // border: 1px solid #ddd !important;
-}
+
 .currency {
   position: relative;
 }
@@ -92,60 +88,13 @@ h2 {
   padding-right: 40px;
 }
 
-.currency::after {
-  content: "SAR";
-  position: absolute;
-  right: 9px;
-  top: 53px;
-  color: #616161;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 24px;
-  letter-spacing: 0%;
-}
 
-.upload-area {
-  border: 2px dashed #ddd;
-  border-radius: 8px;
-  padding: 40px;
-  text-align: center;
-  margin: 30px 0;
-  cursor: pointer;
-}
 
-.upload-area .icon {
-  width: 40px;
-  height: 40px;
-  margin-bottom: 10px;
-  color: #4285f4;
-}
 
-.upload-text {
-  font-size: 14px;
-  color: #4285f4;
-  text-decoration: none;
-}
-
-.upload-subtext {
-  font-size: 14px;
-  color: #666;
-  margin-top: 5px;
-}
-
-.submit-btn {
-  width: 100%;
-  padding: 12px;
-  background-color: var(--main-color);
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
 
 .card {
   max-width: 80vw;
+  padding: 1rem 0 0 1rem;
   margin: 80px auto 0 auto;
   h1 {
     font-weight: 400;
@@ -195,28 +144,6 @@ h2 {
   background: #eeeeee;
   color: #2d68ff;
 }
-.submit-btn:disabled {
-  cursor: not-allowed;
-  opacity: 0.6;
-}
-.upload-success {
-  color: #28a745;
-  font-weight: bold;
-  margin-top: 10px;
-  animation: fadeOut 2s forwards;
-}
 
-.preview-img {
-  width: 150px;
-  height: 150px;
-  object-fit: cover;
-  margin-top: 10px;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-}
 
-@keyframes fadeOut {
-  0% { opacity: 1; }
-  80% { opacity: 1; }
-  100% { opacity: 0; display: none; }
-}
+

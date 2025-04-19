@@ -73,11 +73,7 @@ export class BasketService {
   }
 
   addItemToBasket(item: IProduct, quantity = 1) {
-    debugger;
-    const itemToAdd: IBasketItem = this.mapProductItemToBasketItem(
-      item,
-      quantity,
-    );
+    const itemToAdd: IBasketItem = this.mapProductItemToBasketItem(item,quantity);
     const basket = this.getCurrentBasketValue() ?? this.createBasket();
     basket.items = this.addOrUpdateItem(basket.items, itemToAdd, quantity);
     this.setBasket(basket);

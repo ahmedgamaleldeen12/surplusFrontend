@@ -15,14 +15,12 @@ export class BasketSummaryComponent {
   @Output() increment: EventEmitter<IBasketItem> = new EventEmitter<IBasketItem>();
   @Output() remove: EventEmitter<IBasketItem> = new EventEmitter<IBasketItem>();
   @Input() isBasket = true;
-  @Input() items: any[] = [];
+  @Input() items: IBasketItem[] = [];
   @Input() isOrder = false;
 
   constructor() { }
 
-  ngOnInit(): void {
-    console.log(this.items)
-  }
+  ngOnInit(): void {}
 
   decrementItemQuantity(item: IBasketItem) {
     this.decrement.emit(item);

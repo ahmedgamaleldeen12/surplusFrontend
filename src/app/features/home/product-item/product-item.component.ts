@@ -11,8 +11,8 @@ import { IProduct } from '../../../core/models/product';
 })
 export class ProductItemComponent {
   @Input() product!: any;
-
   private readonly basketService = inject(BasketService);
+  
   addItemToBasket() {
     this.basketService.addItemToBasket(this.product);
   }

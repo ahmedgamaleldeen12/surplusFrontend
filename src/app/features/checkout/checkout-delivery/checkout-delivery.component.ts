@@ -19,8 +19,7 @@ export class CheckoutDeliveryComponent {
   constructor(private checkoutService: CheckoutService, private basketService: BasketService) { }
 
   ngOnInit(): void {
-    this.checkoutService.getDeliveryMethods().subscribe((dm: IDeliveryMethod[]) => {
-      this.deliveryMethods = dm;
+    this.checkoutService.getDeliveryMethods().subscribe((dm: IDeliveryMethod[]) => {this.deliveryMethods = dm;
     }, error => {
       console.log(error);
     })

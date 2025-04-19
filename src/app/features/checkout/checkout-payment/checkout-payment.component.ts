@@ -13,7 +13,7 @@ declare var Stripe: any;
 
 @Component({
   selector: 'app-checkout-payment',
-  imports: [TextInputComponent, CommonModule, ReactiveFormsModule, CdkStepperModule],
+  imports: [TextInputComponent, CommonModule, ReactiveFormsModule, CdkStepperModule , FormsModule],
   templateUrl: './checkout-payment.component.html',
   styleUrl: './checkout-payment.component.scss'
 })

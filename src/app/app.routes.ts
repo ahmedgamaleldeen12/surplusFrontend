@@ -12,6 +12,7 @@ import { ProfileComponent } from './features/profile/profile.component';
 import { BasketComponent } from './features/basket/basket/basket.component';
 import { CheckoutComponent } from './features/checkout/checkout.component';
 import { AdminPanelComponent } from './features/admin-panel/admin-panel.component';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -68,6 +69,7 @@ export const routes: Routes = [
     title: 'supplier home',
   },
   {
+    canActivate: [authGuard],
     path: 'profile',
     component: ProfileComponent,
     title: 'Profile',
@@ -78,11 +80,13 @@ export const routes: Routes = [
     title: 'basket',
   },
   {
+    canActivate: [authGuard],
     path: 'checkout',
     component: CheckoutComponent,
     title: 'checkout'
   },
   {
+    canActivate: [authGuard],
     path: 'admin-panel',
     component: AdminPanelComponent,
     title: 'Admin Panel'

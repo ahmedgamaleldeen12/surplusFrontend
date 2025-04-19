@@ -21,14 +21,12 @@
 
 <div class="float-none d-flex justify-content-between flex-column flex-lg-row mb-5">
   <button class="btn btn-outline-primary" cdkStepperPrevious>
-    <i class="fa fa-angle-left"></i> Back to Review
+    <i class="pi pi-angle-left"></i> Back to Review
   </button>
-  <button [disabled]="loading
-          || checkoutForm.get('paymentForm')!.invalid
-          || !cardNumberValid
+  <button [disabled]="loading || checkoutForm.get('paymentForm')!.invalid|| !cardNumberValid
           || !cardExpiryValid
           || !cardCvcValid" class="btn btn-primary" (click)="submitOrder()">
-    Submit order <i class="fa fa-angle-right"></i>
-    <i *ngIf="loading" class="fa fa-spinner fa-spin"></i>
+    Submit order <i class="pi pi-angle-right"></i>
+    <i *ngIf="loading" class="pi pi-spin pi-spinner"></i>
   </button>
 </div>

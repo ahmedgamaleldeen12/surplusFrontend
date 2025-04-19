@@ -6,6 +6,7 @@ import { routes } from './app.routes';
 import lara from '@primeng/themes/lara';
 import { definePreset } from '@primeng/themes';
 import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideToastr } from 'ngx-toastr';
 
 const MyPreset = definePreset(lara, {
   semantic: {
@@ -30,6 +31,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideAnimationsAsync(),
     provideHttpClient(withFetch()),
+    provideToastr(),
     providePrimeNG({
       theme: {
         preset: MyPreset,

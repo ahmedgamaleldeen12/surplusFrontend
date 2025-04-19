@@ -11,6 +11,7 @@ import { BusinessHomeComponent } from './features/business-home/business-home.co
 import { ProfileComponent } from './features/profile/profile.component';
 import { BasketComponent } from './features/basket/basket/basket.component';
 import { CheckoutComponent } from './features/checkout/checkout.component';
+import { AdminPanelComponent } from './features/admin-panel/admin-panel.component';
 
 export const routes: Routes = [
   {
@@ -80,5 +81,10 @@ export const routes: Routes = [
     path: 'checkout',
     component: CheckoutComponent,
     title: 'checkout'
+  },
+  {
+    path: 'admin-panel',
+    component: AdminPanelComponent,
+    title: 'Admin Panel'
   }
 ];

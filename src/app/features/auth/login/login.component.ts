@@ -97,13 +97,16 @@ export class LoginComponent implements OnInit {
           undefined,
           false,
           'Lax',
-        );
+        );console.log(this.authService.getUserRole() == 'Admin');
+
+        if (this.authService.getUserRole() == 'Admin') {
+          this.router.navigate(['./admin-panel']);
+        }
         if (this.authService.getTempAuthRole() == 'User') {
           this.router.navigate(['./marketplace']);
-        } else if (this.authService.getTempAuthRole() == 'BusinessManager') {
+        }
+        if (this.authService.getTempAuthRole() == 'BusinessManager') {
           this.router.navigate(['./supplier']);
-        } else if (this.authService.getTempAuthRole() == 'Admin') {
-          // this.router.navigate(['./supplier']);
         }
       }
     } catch (err) {

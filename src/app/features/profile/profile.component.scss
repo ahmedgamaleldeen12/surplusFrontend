@@ -21,8 +21,6 @@
   z-index: 999;
 }
 
-
-
 .profile-container {
   max-width: 800px;
   margin: 1rem auto;
@@ -73,8 +71,6 @@
   font-size: 14px;
 }
 
-
-
 .form-group {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -103,39 +99,9 @@
   font-size: 14px;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.max-w-full {
+  width: 100%;
+}
 
 .form-grid {
   display: grid;

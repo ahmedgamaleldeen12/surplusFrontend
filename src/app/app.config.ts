@@ -5,7 +5,8 @@ import { providePrimeNG } from 'primeng/config';
 import { routes } from './app.routes';
 import lara from '@primeng/themes/lara';
 import { definePreset } from '@primeng/themes';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
+import { jwtInterceptor } from './core/interceptors/jwt.interceptor';
 import { provideToastr } from 'ngx-toastr';
 
 const MyPreset = definePreset(lara, {
@@ -30,7 +31,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideAnimationsAsync(),
-    provideHttpClient(withFetch()),
+    provideHttpClient(withFetch(), withInterceptors([jwtInterceptor])),
     provideToastr(),
     providePrimeNG({
       theme: {

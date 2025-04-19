@@ -1,55 +1,99 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FooterComponent } from '../home/footer/footer.component';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
-import { MenuItem } from 'primeng/api';
-import { HttpClient } from '@angular/common/http';
+import { MenuItem, MessageService } from 'primeng/api';
+import { ProfileService } from './profile.service';
+import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [FooterComponent, BreadcrumbModule],
+  imports: [FooterComponent, BreadcrumbModule, FormsModule, ToastModule],
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
+  providers: [MessageService],
 })
 export class ProfileComponent {
-  profile: any = {};
+  profile!: User;
+  Address: Address = {
+    firstName: '',
+    street: '',
+    city: '',
+    country: ''
+  };
   profileImageUrl: string = '';
   selectedImage!: File;
-
   items: MenuItem[] | undefined;
   home: MenuItem | undefined;
+  profileForm!: FormGroup;
 
-  constructor(private http: HttpClient) {}
+  private readonly profileService = inject(ProfileService);
+  private readonly fb = inject(FormBuilder);
+  private readonly messageService = inject(MessageService);
+
+  constructor() {}
 
   ngOnInit() {
-    this.getProfile();
-
+    this.getProfileData();
     this.items = [{ label: 'profile' }];
     this.home = { icon: 'pi pi-home', routerLink: '/' };
   }
-
-  getProfile() {
-    this.http
-      .get<any>('http://localhost:5049/api/Account/profile')
-      .subscribe((res) => {
-        this.profile = res;
-        this.profileImageUrl = res.profileImage;
-      });
+  initForm() {
+    this.profileForm = this.fb.group({});
   }
-
   onImageSelected(event: any) {
     this.selectedImage = event.target.files[0];
+    this.uploadImage();
   }
-
+  async getProfileData() {
+    await this.profileService.getProfile().subscribe((res) => {
+      this.profile = res;
+      this.Address = res.address || {
+        firstName: '',
+        street: '',
+        city: '',
+        country: ''
+      };
+    });
+  }
   uploadImage() {
     if (!this.selectedImage) return;
     const formData = new FormData();
     formData.append('file', this.selectedImage);
-
-    this.http
-      .post('http://localhost:5049/api/Account/upload-profile-image', formData)
-      .subscribe(() => {
-        this.getProfile(); // Refresh profile image
-      });
+    this.profileService.updateImage(formData).subscribe((res) => {
+      this.getProfileData();
+    });
+  }
+  async updateProfile() {
+    let data: User = {
+      address: this.Address,
+      email: this.profile.email,
+      firstName: this.profile.firstName,
+      phoneNumber: this.profile.phoneNumber,
+      profileImage :this.profile.profileImage
+    };
+    await this.profileService.updateProfile(data).subscribe((res) => {
+        this.getProfileData();
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'You successfully update your profile.',
+        });
+    });
   }
 }
+export type Address = {
+  firstName: string;
+  street: string | null;
+  city: string | null;
+  country: string | null;
+};
+
+export type User = {
+  firstName: string;
+  email: string;
+  address: Address;
+  profileImage: string;
+  phoneNumber: string;
+};

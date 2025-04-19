@@ -2,7 +2,7 @@
   <div class="logo">
     <img src="assets/images/Nubiq-Logo.svg" alt="Nubiq" />
   </div>
-  <div class="nav-text">
+  <div class="nav-text" (click)="naviagte()" style="cursor: pointer;">
     <img src="./assets/icons/bag.svg" alt="" />
     <p>
       <span>Hello, {{ this.userName }} ,</span>you are logged in as a supplier.
@@ -12,82 +12,114 @@
 
 <div class="container">
   <h2>Add new listings</h2>
-<form [formGroup]="productForm" (submit)="addNewProduct()">
-  <div class="form-group">
-    <div class="input-group">
-      <label>Product Name</label>
-      <input type="text" formControlName="name" placeholder="enter product name" />
-    </div>
-
-    <div class="input-group currency">
-      <label>Price</label>
-      <input type="number" min="1" placeholder="enter product price" formControlName="price" />
-    </div>
-  </div>
-
-  <div class="form-group">
-    <div class="input-group">
-      <label>Model Specifications</label>
-      <input type="text" formControlName="description" placeholder="enter description" />
-    </div>
-
-    <div class="input-group">
-      <label>SKU</label>
-      <input type="text" placeholder="enter brand name" />
-    </div>
-  </div>
-
-  <div class="form-group">
-    <div class="input-group" style="flex-direction: column-reverse;">
-      <p-floatlabel class="" variant="on">
-        <p-select
-          formControlName="categoryId"
-          inputId="on_label"
-          [options]="categories"
-          optionLabel="name"
-          optionValue="id"
-          styleClass="w-full"
+  <form [formGroup]="productForm" (submit)="addNewProduct()">
+    <div class="form-group">
+      <div class="input-group">
+        <label>Product Name</label>
+        <input
+          type="text"
+          formControlName="name"
+          placeholder="enter product name"
         />
-        <label for="on_label">Category</label>
-      </p-floatlabel>
+      </div>
+
+      <div class="input-group currency">
+        <label>Price</label>
+        <input
+          type="number"
+          min="1"
+          placeholder="enter product price"
+          formControlName="price"
+        />
+      </div>
     </div>
-    <div class="input-group">
-      <label>Quantity</label>
-      <input formControlName="quantity" type="number" min="1" placeholder="enter product quantity" />
+
+    <div class="form-group">
+      <div class="input-group">
+        <label>Model Specifications</label>
+        <input
+          type="text"
+          formControlName="description"
+          placeholder="enter description"
+        />
+      </div>
+
+      <div class="input-group">
+        <label>Quantity</label>
+        <input
+          formControlName="quantity"
+          type="number"
+          min="1"
+          placeholder="enter product quantity"
+        />
+      </div>
     </div>
-  </div>
 
+    <div class="form-group">
+      <div class="input-group" style="flex-direction: column-reverse">
+        <p-floatlabel class="" variant="on">
+          <p-select
+            formControlName="categoryId"
+            inputId="on_label"
+            [options]="categories"
+            optionLabel="name"
+            optionValue="id"
+            styleClass="w-full"
+          />
+          <label for="on_label">Category</label>
+        </p-floatlabel>
+      </div>
+    </div>
 
-
-  <div class="upload-area">
-    <svg class="icon"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
+    <div
+      class="upload-area"
+      (click)="fileInput.click()"
+      (drop)="onFileDrop($event)"
+      (dragover)="onDragOver($event)"
     >
-      <path
-        d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"
+      <svg
+        class="icon"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path
+          d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"
+        />
+      </svg>
+      <div class="upload-text">Click here</div>
+      <div class="upload-subtext">to upload or drop photos here</div>
+
+      <div *ngIf="uploadSuccess" class="upload-success">
+        ✅ Photo uploaded successfully!
+      </div>
+      <img
+        *ngIf="imagePreviewUrl"
+        [src]="imagePreviewUrl"
+        class="preview-img"
       />
-    </svg>
-    <div class="upload-text">Click here</div>
-    <div class="upload-subtext">to upload or drop photos here</div>
-  </div>
 
-  <button type="submit" [disabled]="!productForm.valid" class="submit-btn">Add New Listing</button>
-</form>
+      <input
+        #fileInput
+        type="file"
+        hidden
+        (change)="onFileSelected($event)"
+        accept="image/*"
+      />
+    </div>
+
+    <button type="submit" [disabled]="!productForm.valid" class="submit-btn">
+      Add New Listing
+    </button>
+  </form>
 </div>
-
-
-
-
-
 
 <div class="card">
   <h1>Your Listings</h1>
   <p-table
     [value]="listings"
-    [paginator]="true"
+    [paginator]="false"
     [rows]="5"
     [showCurrentPageReport]="true"
     [tableStyle]="{ 'min-width': '60rem' }"
@@ -98,7 +130,7 @@
       <tr>
         <th>Date</th>
         <th>Name</th>
-        <th>Brand name</th>
+        <th>Category</th>
         <th>Price</th>
         <th>Status</th>
         <th>Quantity</th>
@@ -106,16 +138,16 @@
     </ng-template>
     <ng-template pTemplate="body" let-listing>
       <tr>
-        <td>{{ listing.date }}</td>
+        <td>{{ listing.date | date: 'medium'  }}</td>
         <td>{{ listing.name }}</td>
-        <td>{{ listing.brandName }}</td>
+        <td>{{ getCategoryLabel(listing.categoryId)}}</td>
         <td>{{ listing.price }}</td>
         <td>
           <span
             class="status-badge"
-            [class]="'status-' + listing.status.toLowerCase()"
+            [class]="'status-' + getStatusLabel(listing.status).toLowerCase()"
           >
-            {{ listing.status }}
+            {{ getStatusLabel(listing.status) }}
           </span>
         </td>
         <td>{{ listing.quantity }}</td>
@@ -125,3 +157,4 @@
 </div>
 
 <app-footer></app-footer>
+<p-toast></p-toast>

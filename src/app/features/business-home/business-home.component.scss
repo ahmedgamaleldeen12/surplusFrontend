@@ -81,8 +81,8 @@ h2 {
 }
 :host ::ng-deep .p-select-label {
   // padding: 8px 12px;
-  border-radius: 4px !important;
-  border: 1px solid #ddd !important;
+  // border-radius: 4px !important;
+  // border: 1px solid #ddd !important;
 }
 .currency {
   position: relative;
@@ -198,4 +198,25 @@ h2 {
 .submit-btn:disabled {
   cursor: not-allowed;
   opacity: 0.6;
+}
+.upload-success {
+  color: #28a745;
+  font-weight: bold;
+  margin-top: 10px;
+  animation: fadeOut 2s forwards;
+}
+
+.preview-img {
+  width: 150px;         
+  height: 150px;
+  object-fit: cover;
+  margin-top: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; display: none; }
 }

@@ -7,6 +7,7 @@ import lara from '@primeng/themes/lara';
 import { definePreset } from '@primeng/themes';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { jwtInterceptor } from './core/interceptors/jwt.interceptor';
+import { provideToastr } from 'ngx-toastr';
 
 const MyPreset = definePreset(lara, {
   semantic: {
@@ -31,6 +32,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideAnimationsAsync(),
     provideHttpClient(withFetch(), withInterceptors([jwtInterceptor])),
+    provideToastr(),
     providePrimeNG({
       theme: {
         preset: MyPreset,

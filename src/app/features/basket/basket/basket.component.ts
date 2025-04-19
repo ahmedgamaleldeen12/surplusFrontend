@@ -6,10 +6,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BasketSummaryComponent } from "../../../core/components/basket-summary/basket-summary.component";
 import { OrderTotalsComponent } from "../../../core/components/order-totals/order-totals.component";
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-basket',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, BasketSummaryComponent, OrderTotalsComponent],
+  imports: [CommonModule, FormsModule, RouterLink, ReactiveFormsModule, BasketSummaryComponent, OrderTotalsComponent],
   templateUrl: './basket.component.html',
   styleUrl: './basket.component.scss'
 })

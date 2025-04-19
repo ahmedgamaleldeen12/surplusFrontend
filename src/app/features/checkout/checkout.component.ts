@@ -15,9 +15,7 @@ import { CdkStepperModule } from '@angular/cdk/stepper';
 
 @Component({
   selector: 'app-checkout',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, StepperComponent, CheckoutAddressComponent,
-    CheckoutDeliveryComponent, CheckoutReviewComponent, CheckoutPaymentComponent,
-    OrderTotalsComponent, CdkStepperModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, CdkStepperModule],
   templateUrl: './checkout.component.html',
   styleUrl: './checkout.component.scss'
 })

@@ -7,12 +7,13 @@ import { BasketService } from '../../basket/basket.service';
 import { CheckoutService } from '../checkout.service';
 import { CommonModule } from '@angular/common';
 import { TextInputComponent } from '../../../core/components/text-input/text-input.component';
+import { CdkStepperModule } from '@angular/cdk/stepper';
 
 declare var Stripe: any;
 
 @Component({
   selector: 'app-checkout-payment',
-  imports: [TextInputComponent, CommonModule, ReactiveFormsModule],
+  imports: [TextInputComponent, CommonModule, ReactiveFormsModule, CdkStepperModule],
   templateUrl: './checkout-payment.component.html',
   styleUrl: './checkout-payment.component.scss'
 })

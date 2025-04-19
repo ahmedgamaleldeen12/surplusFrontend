@@ -88,11 +88,11 @@ export class AuthService {
     this.cookieService.deleteAll();
   }
   getUserAddress() {
-    return this.http.get<IAddress>(this.baseUrl + 'account/address');
+    return this.http.get<IAddress>(this.baseUrl + 'api/' + 'account/address');
   }
 
   updateUserAddress(address: IAddress) {
-    return this.http.put<IAddress>(this.baseUrl + 'account/address', address);
+    return this.http.put<IAddress>(this.baseUrl + 'api/' + 'account/address', address);
   }
   getUserName(): string {
     const token = this.cookieService.get(CookiesConstants.authUserToken);

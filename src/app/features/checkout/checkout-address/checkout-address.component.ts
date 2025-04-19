@@ -5,10 +5,12 @@ import { IAddress } from '../../../core/models/address';
 import { AuthService } from '../../../core/services/Auth.service';
 import { TextInputComponent } from "../../../core/components/text-input/text-input.component";
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { CdkStepperModule } from '@angular/cdk/stepper';
 
 @Component({
   selector: 'app-checkout-address',
-  imports: [TextInputComponent, CommonModule, ReactiveFormsModule],
+  imports: [TextInputComponent, CommonModule, ReactiveFormsModule, RouterLink, CdkStepperModule],
   templateUrl: './checkout-address.component.html',
   styleUrl: './checkout-address.component.scss'
 })

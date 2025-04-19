@@ -27,7 +27,7 @@ export class BasketService {
 
   createPaymentIntent() {
     return this.http
-      .post(this.baseUrl + 'payment/' + this.getCurrentBasketValue().id, {})
+      .post(this.baseUrl + 'api/' + 'payment/' + this.getCurrentBasketValue().id, {})
       .pipe(
         map((basket: any) => {
           this.basketSource.next(basket);
@@ -120,7 +120,7 @@ export class BasketService {
   }
 
   deleteBasket(basket: IBasket) {
-    return this.http.delete(this.baseUrl + 'basket?id=' + basket.id).subscribe(
+    return this.http.delete(this.baseUrl + 'api/' + 'basket?id=' + basket.id).subscribe(
       () => {
         this.basketSource.next(null!);
         this.basketTotalSource.next(null!);

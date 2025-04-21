@@ -7,20 +7,25 @@
     <input type="text" placeholder="Global Search" />
     <img class="search-icon" src="./assets/icons/search-icon.svg" alt="" />
   </div>
-
   <div class="actions">
-    <button class="register" (click)="navigate('./auth/register', 'User')">
-      Register
-    </button>
-    <button class="login" (click)="navigate('./auth/login', 'BusinessManager')">
-      Login as Supplier
-    </button>
+    @if(authService.getToken()){
+      <button  class="register" (click)="authService.logOut()">
+        Logout
+      </button>
+    }@else {
+      <button  class="register" (click)="navigate('./auth/register', 'User')">
+        Register
+      </button>
+      <button class="login" (click)="navigate('./auth/login', 'BusinessManager')">
+        Login as Supplier
+      </button>
+    }
     <div class="cart" (click)="navigate('./basket')">
       <img src="./assets/icons/cart.svg" alt="cart icon" />
         <span *ngIf="basket$ | async as basket" class="badge">{{ basket.items.length}}</span>
     </div>
-    <div class="wishlist">
+    <!-- <div class="wishlist">
       <img src="./assets/icons/wish-list.svg" alt="wish list icon" />
-    </div>
+    </div> -->
   </div>
 </header>

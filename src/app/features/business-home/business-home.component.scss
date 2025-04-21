@@ -23,7 +23,7 @@
 
 .nav-text {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   img {
     margin: 0 0.5rem;
@@ -47,6 +47,17 @@ h2 {
   line-height: 47.07px;
   letter-spacing: 0%;
   color: rgba(0, 0, 0, 1);
+}
+
+.register {
+  background-color: #fff;
+  color: #64748b;
+  border: 1px solid #64748b;
+  font-weight: 500;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 0.5rem;
 }
 
 .form-group {
@@ -79,11 +90,17 @@ h2 {
 .w-full {
   width: 100%;
 }
-:host ::ng-deep .p-select-label {
-  // padding: 8px 12px;
-  // border-radius: 4px !important;
-  // border: 1px solid #ddd !important;
+.profile-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
 }
+// :host ::ng-deep .p-select-label {
+// padding: 8px 12px;
+// border-radius: 4px !important;
+// border: 1px solid #ddd !important;
+// }
 .currency {
   position: relative;
 }
@@ -147,6 +164,7 @@ h2 {
 .card {
   max-width: 80vw;
   margin: 80px auto 0 auto;
+  padding: 1rem 0 0 1rem;
   h1 {
     font-weight: 400;
     font-size: 36px;
@@ -207,7 +225,7 @@ h2 {
 }
 
 .preview-img {
-  width: 150px;         
+  width: 150px;
   height: 150px;
   object-fit: cover;
   margin-top: 10px;
@@ -216,7 +234,14 @@ h2 {
 }
 
 @keyframes fadeOut {
-  0% { opacity: 1; }
-  80% { opacity: 1; }
-  100% { opacity: 0; display: none; }
+  0% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    display: none;
+  }
 }

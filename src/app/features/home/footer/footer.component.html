@@ -36,7 +36,11 @@
           <li><p>Block 148 Abu Al Haj Complex</p></li>
           <li><p>+966-790-1800-13</p></li>
         </ul>
-        <img style="margin-top: 16px; height: 54px;" src="./assets/images/Nubiq-Logo.svg" alt="">
+        <img
+          style="margin-top: 16px; height: 54px"
+          src="./assets/images/Nubiq-Logo.svg"
+          alt=""
+        />
       </div>
 
       <div class="section">
@@ -57,11 +61,16 @@
         Receive exciting news and be the first to hear about our new offers by
         email once a week.
       </p>
-      <div class="form">
-        <input type="text" placeholder="Name" />
-        <input type="email" placeholder="Email" />
-        <button>Register</button>
-      </div>
+      <form [formGroup]="newslettersForm" (ngSubmit)="send()">
+        <div class="form">
+          <input formControlName="userName" type="text" placeholder="Name" />
+          <input formControlName="email" type="email" placeholder="Email" />
+          <button [disabled]="!newslettersForm.valid" type="submit">
+            Register
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
+<p-toast></p-toast>

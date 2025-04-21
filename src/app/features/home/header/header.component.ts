@@ -19,7 +19,7 @@ export class HeaderComponent {
   private readonly  auth = inject(AuthService);
   basket$!: Observable<IBasket>;
   currentUser$!: Observable<IUser>;
-
+  public readonly authService = inject(AuthService)
   navigate(url : string , tempRole ?: UserRole ){
     if(tempRole){
       this.auth.setTempAuthRole(tempRole);

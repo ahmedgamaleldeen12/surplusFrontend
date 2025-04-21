@@ -30,6 +30,21 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.register {
+  background-color: #fff;
+  color: #64748b;
+  border: 1px solid #64748b;
+  font-weight: 500;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 0.5rem;
+}
+:host ::ng-deep .p-breadcrumb{
+  background: white !important;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 .profile-header {
   display: flex;
   align-items: center;
@@ -42,7 +57,17 @@
   align-items: center;
   gap: 16px;
 }
-
+.nav-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img {
+    margin: 0 0.5rem;
+  }
+  span {
+    font-weight: bold;
+  }
+}
 .profile-avatar {
   width: 48px;
   height: 48px;

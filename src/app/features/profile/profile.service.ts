@@ -1,16 +1,17 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { User } from './profile.component';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
+import { AuthService } from '../../core/services/Auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProfileService {
   baseUrl = environment.apiUrl;
-
-  constructor(private http: HttpClient) {}
+  private readonly http = inject(HttpClient);
+  constructor() {}
 
 
   getProfile(): Observable<User> {
@@ -20,7 +21,6 @@ export class ProfileService {
     return this.http.post(`${this.baseUrl}api/Account/upload-profile-image`, formData)
   }
   updateProfile(data : User){
-    // debugger
     return this.http.put(`${this.baseUrl}api/Account/profile`, data)
   }
 }

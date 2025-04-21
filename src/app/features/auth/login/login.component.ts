@@ -19,6 +19,7 @@ import { AuthService } from '../../../core/services/Auth.service';
 import { TabsComponent } from '../tabs/tabs.component';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-login',
@@ -97,16 +98,24 @@ export class LoginComponent implements OnInit {
           undefined,
           false,
           'Lax',
-        );console.log(this.authService.getUserRole() == 'Admin');
+        );
 
-        if (this.authService.getUserRole() == 'Admin') {
-          this.router.navigate(['./admin-panel']);
-        }
-        if (this.authService.getTempAuthRole() == 'User') {
-          this.router.navigate(['./marketplace']);
-        }
-        if (this.authService.getTempAuthRole() == 'BusinessManager') {
-          this.router.navigate(['./supplier']);
+        const decoded: any = jwtDecode(res.data.jwt);
+        debugger
+        const role = decoded?.role;
+
+        switch (role) {
+          case 'Admin':
+            this.router.navigate(['./admin-panel']);
+            break;
+          case 'User':
+            this.router.navigate(['./marketplace']);
+            break;
+          case 'BusinessManager':
+            this.router.navigate(['./supplier']);
+            break;
+          default:
+            this.router.navigate(['/auth/login']);
         }
       }
     } catch (err) {

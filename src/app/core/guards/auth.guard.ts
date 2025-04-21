@@ -8,7 +8,8 @@ export const authGuard: CanActivateFn = (route, state) => {
   if (authService.getToken()) {
     return true;
   } else {
-    router.navigate(['auth/login'], { queryParams: { returnUrl: state.url } });
+
+    router.navigate(['./marketplace'], { queryParams: { returnUrl: state.url } });
   }
   return true;
 };

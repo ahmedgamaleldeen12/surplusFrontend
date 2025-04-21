@@ -3,8 +3,11 @@
     <img src="assets/images/Nubiq-Logo.svg" alt="Nubiq" />
   </div>
   <div class="nav-text" style="cursor: pointer">
-    <img src="./assets/icons/bag.svg" alt="" />
-    <p><span>Hello, Admin ,</span> You are admin of Surplus.</p>
+    <img (click)="naviagte()" [src]=" profileImageUrl ? profileImageUrl : './assets/icons/bag.svg' " alt=""  class="profile-avatar"/>
+    <p (click)="naviagte()" style="margin: 0;"><span>Hello, Admin ,</span> You are admin of Surplus.</p>
+    <button  class="register" (click)="authService.logOut()">
+      Logout
+    </button>
   </div>
 </header>
 

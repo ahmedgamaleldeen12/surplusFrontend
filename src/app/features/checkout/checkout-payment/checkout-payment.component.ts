@@ -93,7 +93,7 @@ export class CheckoutPaymentComponent {
       this.basketService.deleteLocalBasket(basket.id);
       setTimeout(() => {
         this.router.navigate(['/marketplace']);
-      }, 1000);
+      }, 2000);
       // const paymentResult = await this.confirmPaymentWithStripe(basket);
       // if (paymentResult.paymentIntent) {
       //   // if (true) {

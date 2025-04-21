@@ -1,8 +1,15 @@
+import { ProfileService } from './../profile/profile.service';
 import { Component, inject, OnInit } from '@angular/core';
 import { FooterComponent } from '../home/footer/footer.component';
 import { TableModule } from 'primeng/table';
 import { AuthService } from '../../core/services/Auth.service';
-import {FormBuilder,FormGroup,FormsModule,ReactiveFormsModule,Validators} from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Select } from 'primeng/select';
 import { FloatLabel } from 'primeng/floatlabel';
 import { ShopService } from '../home/home-detail/shop.service';
@@ -32,14 +39,16 @@ import { Router } from '@angular/router';
 export class BusinessHomeComponent implements OnInit {
   listings: ProductToReturnDto[] = [];
 
-  private readonly authService = inject(AuthService);
+  public readonly authService = inject(AuthService);
   private readonly shopService = inject(ShopService);
   private readonly businessService = inject(BusinessService);
   private readonly messageService = inject(MessageService);
   private readonly router = inject(Router);
   private readonly fb = inject(FormBuilder);
+  private readonly profileService = inject(ProfileService);
 
   userName!: string;
+  profileImageUrl!: string ;
   productForm!: FormGroup;
   categoryId!: number;
   categories: IType[] = [];
@@ -47,10 +56,18 @@ export class BusinessHomeComponent implements OnInit {
 
   async ngOnInit() {
     this.initForm();
-    this.userName = this.authService.getUserName();
-    await this.getTypes();
+    await this.getProfileData();
+    await this.getCategories();
     await this.getpreviosOrders();
   }
+
+  async getProfileData() {
+    await this.profileService.getProfile().subscribe((res) => {
+      this.userName = res.firstName;
+      this.profileImageUrl = res.profileImage;
+    });
+  }
+  //#region Add Product Form
   initForm() {
     this.productForm = this.fb.group({
       name: [null, Validators.required],
@@ -61,8 +78,7 @@ export class BusinessHomeComponent implements OnInit {
       picture: [this.selectedFile, Validators.required],
     });
   }
-
-  getTypes() {
+  getCategories() {
     this.shopService.getTypes().subscribe(
       (response) => {
         this.categories = response;
@@ -82,7 +98,6 @@ export class BusinessHomeComponent implements OnInit {
     formData.append('categoryId', formValue.categoryId);
     formData.append('picture', formValue.picture);
     formData.append('userId', this.authService.getUserId());
-
     this.businessService.addProduct(formData).subscribe((res) => {
       if (res) {
         this.productForm.reset();
@@ -96,8 +111,9 @@ export class BusinessHomeComponent implements OnInit {
       }
     });
   }
+  //#endregion
+  //#region handle Image Selection
   selectedFile!: File | null;
-
   uploadSuccess = false;
   imagePreviewUrl: string | null = null;
 
@@ -113,7 +129,6 @@ export class BusinessHomeComponent implements OnInit {
         this.imagePreviewUrl = reader.result as string;
       };
       reader.readAsDataURL(file);
-
       setTimeout(() => {
         this.uploadSuccess = false;
       }, 2000);
@@ -132,9 +147,8 @@ export class BusinessHomeComponent implements OnInit {
   onDragOver(event: DragEvent) {
     event.preventDefault();
   }
-  naviagte() {
-    this.router.navigate(['./profile']);
-  }
+  //#endregion
+  //#region table of orders
   async getpreviosOrders() {
     await this.businessService.getPagedProducts().subscribe((res) => {
       this.listings = res;
@@ -148,9 +162,16 @@ export class BusinessHomeComponent implements OnInit {
   getStatusLabel(status: ProductStatus): string {
     return this.productStatusMap[status] || 'Unknown';
   }
-  getCategoryLabel(id:number){
-    return this.categories.find(c=> c.id == id)?.name
+  getCategoryLabel(id: number) {
+    return this.categories.find((c) => c.id == id)?.name;
   }
+
+  //#endregion
+  //#region helpers
+  naviagte() {
+    this.router.navigate(['./profile']);
+  }
+  //#endregion
 }
 
 export interface ProductToReturnDto {

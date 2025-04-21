@@ -5,6 +5,7 @@ import { MenuItem, MessageService } from 'primeng/api';
 import { ProfileService } from './profile.service';
 import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
+import { AuthService } from '../../core/services/Auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -31,6 +32,8 @@ export class ProfileComponent {
   private readonly profileService = inject(ProfileService);
   private readonly fb = inject(FormBuilder);
   private readonly messageService = inject(MessageService);
+  public readonly authService = inject(AuthService);
+
 
   constructor() {}
 
@@ -56,6 +59,8 @@ export class ProfileComponent {
         country: ''
       };
     });
+    
+
   }
   uploadImage() {
     if (!this.selectedImage) return;

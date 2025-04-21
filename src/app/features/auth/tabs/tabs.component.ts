@@ -19,7 +19,7 @@ export class TabsComponent {
   }
 
   onTabChange(tab: 'login' | 'register') {
-    this.router.navigate(['/auth', tab]);
+    this.router.navigate(['/auth', tab], { replaceUrl: true });
   }
 
   // checkCurrentRoute() {

@@ -2,12 +2,16 @@
   <div class="logo">
     <img src="assets/images/Nubiq-Logo.svg" alt="Nubiq" />
   </div>
-  <div class="nav-text" (click)="naviagte()" style="cursor: pointer;">
-    <img src="./assets/icons/bag.svg" alt="" />
-    <p>
+  <div class="nav-text"  style="cursor: pointer;">
+    <img  (click)="naviagte()" [src]=" profileImageUrl ? profileImageUrl : './assets/icons/bag.svg' "alt="" class="profile-avatar"    />
+    <p (click)="naviagte()" class="m-auto">
       <span>Hello, {{ this.userName }} ,</span>you are logged in as a supplier.
     </p>
+    <button  class="register" (click)="authService.logOut()">
+      Logout
+    </button>
   </div>
+
 </header>
 
 <div class="container">

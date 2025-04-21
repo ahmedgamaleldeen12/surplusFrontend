@@ -12,6 +12,7 @@ import { AuthService } from '../../core/services/Auth.service';
 import { ShopService } from '../home/home-detail/shop.service';
 import { IType } from '../../core/models/productType';
 import { ToastModule } from 'primeng/toast';
+import { ProfileService } from '../profile/profile.service';
 
 @Component({
   selector: 'app-admin-panel',
@@ -24,14 +25,15 @@ export class AdminPanelComponent {
   listings: ProductToReturnDto[] = [];
   categories: IType[] = [];
 
-  private readonly authService = inject(AuthService);
+  public readonly authService = inject(AuthService);
   private readonly shopService = inject(ShopService);
   private readonly adminPanelService = inject(AdminPanelService);
-  // private readonly businessService = inject(BusinessService);
-  private readonly messageService = inject(MessageService);
+ private readonly profileService = inject(ProfileService);
+   private readonly messageService = inject(MessageService);
   private readonly router = inject(Router);
 
   async ngOnInit() {
+    await this.getProfileData();
     await this.getTypes();
     await this.getOrders();
   }
@@ -81,4 +83,17 @@ export class AdminPanelComponent {
         });
       })
   }
+  //#region helpers
+  naviagte() {
+    this.router.navigate(['./profile']);
+  }
+  userName!: string;
+  profileImageUrl!: string ;
+  async getProfileData() {
+    await this.profileService.getProfile().subscribe((res) => {
+      this.userName = res.firstName;
+      this.profileImageUrl = res.profileImage;
+    });
+  }
+  //#endregion
 }

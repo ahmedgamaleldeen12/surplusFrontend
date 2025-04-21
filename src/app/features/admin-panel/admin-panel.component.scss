@@ -6,6 +6,16 @@
 .logo img {
   height: 40px;
 }
+.register {
+  background-color: #fff;
+  color: #64748b;
+  border: 1px solid #64748b;
+  font-weight: 500;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 0.5rem;
+}
 
 .header {
   display: flex;
@@ -20,10 +30,15 @@
   top: 0;
   z-index: 999;
 }
-
+.profile-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
 .nav-text {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   img {
     margin: 0 0.5rem;

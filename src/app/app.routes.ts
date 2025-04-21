@@ -3,7 +3,7 @@ import { AuthComponent } from './features/auth/auth.component';
 import { LoginComponent } from './features/auth/login/login.component';
 import { RegisterComponent } from './features/auth/register/register.component';
 import { HomeComponent } from './features/home/home.component';
-import { roleGuard } from './core/guards/role.guard';
+import { blockedRoleGuard } from './core/guards/blocked-role.guard';
 import { VerifyCodeComponent } from './features/auth/verify-code/verify-code.component';
 import { ForgetPasswordComponent } from './features/auth/forget-password/forget-password.component';
 import { ChangePasswordComponent } from './features/auth/change-password/change-password.component';
@@ -13,6 +13,7 @@ import { BasketComponent } from './features/basket/basket/basket.component';
 import { CheckoutComponent } from './features/checkout/checkout.component';
 import { AdminPanelComponent } from './features/admin-panel/admin-panel.component';
 import { authGuard } from './core/guards/auth.guard';
+import { allowedRoleGuard } from './core/guards/allowed-role.guard';
 
 export const routes: Routes = [
   {
@@ -60,13 +61,15 @@ export const routes: Routes = [
     path: 'marketplace',
     component: HomeComponent,
     title: 'Marketplace',
-    canActivate: [roleGuard],
-    data: { blockedRoles: ['BusinessManager'] },
+    canActivate: [blockedRoleGuard],
+    data: { blockedRoles: ['BusinessManager', 'Admin'] },
   },
   {
     path: 'supplier',
     component: BusinessHomeComponent,
-    title: 'supplier home',
+    title: 'Supplier Home',
+    canActivate: [allowedRoleGuard],
+    data: { allowedRoles: ['BusinessManager'] },
   },
   {
     canActivate: [authGuard],
@@ -86,9 +89,10 @@ export const routes: Routes = [
     title: 'checkout'
   },
   {
-    canActivate: [authGuard],
+    canActivate: [authGuard, allowedRoleGuard],
     path: 'admin-panel',
     component: AdminPanelComponent,
-    title: 'Admin Panel'
+    title: 'Admin Panel',
+    data: { allowedRoles: ['Admin'] }
   }
 ];

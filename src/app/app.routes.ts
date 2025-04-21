@@ -83,10 +83,11 @@ export const routes: Routes = [
     title: 'basket',
   },
   {
-    canActivate: [authGuard],
+    canActivate: [allowedRoleGuard],
     path: 'checkout',
     component: CheckoutComponent,
-    title: 'checkout'
+    title: 'checkout',
+    data: { allowedRoles: ['User'] }
   },
   {
     canActivate: [authGuard, allowedRoleGuard],
